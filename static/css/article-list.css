@@ -1,0 +1,105 @@
+#Articles .Article{
+    background-color: #FFFFFF;
+    box-shadow: 0px 1px 2px #BBBBBB;
+    
+    margin-bottom: 40px;
+    padding: 10px;
+    
+    border-radius: 5px;
+    
+    position: relative;
+}
+
+#Articles .Article:before {
+    transform: skew(-15deg) rotate(-6deg);
+    left: 15px;
+}
+
+#Articles .Article:after {
+    transform: skew(15deg) rotate(6deg);
+    right: 15px;
+}
+
+#Articles .Article:before, #Articles .Article:after {
+    width: 100px;
+    height: 100px;
+    content: ' ';
+    box-shadow: 0 15px 15px rgba(0,0,0,0.7);
+    position: absolute;
+    bottom: 15px;
+    z-index: -1; 
+}
+
+#Articles .Article .Summary{
+    margin-left: 10px;
+    
+    padding: 10px;
+}
+
+.ArticleHeader{
+    border-bottom: 1px solid #DDDDDD;
+    overflow: hidden;
+    padding: 3px;
+}
+
+.ArticleHeader .Title a{
+    font-family: "source code pro", "consolas", "Ubuntu Mono", "Georgia", "Times New Roman", "Times", "Songti SC", "SimSun", "serif", "Microsoft YaHei";
+    
+    color: #000000;
+}
+
+.ArticleHeader .Title a:hover{
+    color: #0085FF;
+}
+
+.ArticleHeader .Info{
+    float: right;
+}
+
+.ArticleHeader .Info .Category{
+    color: #FF9900;
+}
+
+.ArticleHeader .Info .Author{
+    color: #4A86E8;
+}
+
+.ArticleHeader .Info .CreateTime{
+    color: #6AA84F;
+}
+
+.ArticleFooter{
+    border-top: 1px solid #DDDDDD;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.ArticleFooter .ReadMore{
+    color: #777777;
+    float: right;
+}
+
+.ArticleFooter .ReadMore:hover{
+    color: #0085FF;
+}
+
+.ArticlesFooter .PageNav{
+    border-radius: 3px;
+    background: #FFFFFF;
+    box-shadow: 1px 2px 3px #BBBBBB;
+    
+    padding: 10px;
+    text-align: center;
+}
+
+.ArticlesFooter .PageNav .PageNavLink{
+    color: #999999;
+}
+
+.ArticlesFooter .PageNav a.PageNavLink:hover{
+    color: #0085FF;
+}
+
+.ArticlesFooter .PageNav .Curr{
+    color: #000000;
+}

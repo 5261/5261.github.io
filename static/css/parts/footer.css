@@ -1,0 +1,15 @@
+#PageFooter{
+    text-align: center;
+}
+
+#PageFooter hr{
+    color: #DDDDDD;
+    font-family: "source code pro", "consolas", "Ubuntu Mono", "Georgia", "Times New Roman", "Times", "Songti SC", "SimSun", "serif", "Microsoft YaHei";
+    
+}
+
+#PageFooter p{
+    color: #000000;
+    font-family: "Ubuntu mono", "Georgia";
+    padding: 10px;
+}

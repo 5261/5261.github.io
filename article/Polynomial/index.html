@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+
+
+
+<html>
+
+<head>
+    <meta charset = "UTF-8">
+    
+    <title> Hellc </title>
+    
+    <link rel = "stylesheet" type = "text/css" href = "https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <link rel = "stylesheet" type = "text/css" href = "/static/css/parts/header.css" />
+    <link rel = "stylesheet" type = "text/css" href = "/static/css/parts/sidebar.css" />
+    <link rel = "stylesheet" type = "text/css" href = "/static/css/parts/main.css" />
+    <link rel = "stylesheet" type = "text/css" href = "/static/css/parts/footer.css" />
+
+    
+
+<link rel = "stylesheet" type = "text/css" href = "/static/css/article-detail.css" />
+<link rel = "stylesheet" type = "text/css" href = "/static/css/parts/markdown.css" />
+<link rel = "stylesheet" type = "text/css" href = "/static/css/parts/highlight.css" />
+
+
+    <script type = "text/javascript" src = "//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <script type = "text/javascript" src = "/static/js/tagcloud.js"></script>
+
+    <script type = "text/javascript">
+        var settings = {
+            //height of sphere container
+            height: 300,
+            //width of sphere container
+            width: 300,
+            //radius of sphere
+            radius: 100,
+            //rotation speed
+            speed: 2,
+            //sphere rotations slower
+            slower: 0.9,
+            //delay between update position
+            timer: 5,
+            //dependence of a font size on axis Z
+            fontMultiplier: 20,
+            //tag css stylies on mouse over
+            hoverStyle: {
+                border: 'none',
+                color: '#0b2e6f'
+            },
+            //tag css stylies on mouse out
+            mouseOutStyle: {
+                border: '',
+                color: ''
+            }
+        };
+    
+        $(document).ready(function(){
+            $('#tagcloud').tagoSphere(settings);
+        });
+    </script>
+
+    
+<script type = "text/javascript" src = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type = "text/x-mathjax-config"> MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
+
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"hellc"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+</script>
+
+
+</head>
+
+<body>
+
+
+
+<header id = "PageHeader">
+
+    <div id = "BlogHeader">
+        <div id = "BlogImgLogo">
+            <img src = "/static/img/HellcLogo.jpg" alt = "Hellc"/>
+        </div>
+        
+        <div id = "BlogTextLogo">
+            <div id = "BlogName">
+                <h1> Hellc </h1>
+            </div>
+            
+            <div id = "BlogMotto">
+                <h2> Fly in the blue and free sky. </h2>
+            </div>
+        </div>
+        
+    </div>
+
+    <nav id = "BlogNav">
+        <ul>
+            <li>
+                <a href = "/" class = "NavLink"> Home </a>
+            </li>
+
+            <li> 
+                <a href = "/archive/" class = "NavLink"> Archive </a>
+            </li>
+
+            <li>
+                <a href = "/about/" class = "NavLink"> About </a>
+            </li>
+        </ul>
+    </nav>
+
+</header>
+
+
+<div id = "Content">
+    <div id = Wrapper>
+        
+<article class = "Article">
+    
+    <header class = "ArticleHeader">
+        <div class = "Title">
+            <a href = "#">
+                <h2> 多项式基础 - 学习笔记 </h2>
+            </a>
+        </div>
+    </header>
+    
+    <div class = "ArticleBody Markdown">
+        <p>本文主要讲述了多项式的定义，系数表达及点值表达，两种表达方式的转换，优化多项式乘法的思路等问题。</p>
+<p>主要是作为学习 FFT 的预备知识。</p>
+<!--more-->
+
+<h2>多项式</h2>
+<p>以下形式的 $A(x)$ 称为「多项式」。</p>
+<p>$$
+A(x) = \sum_{i = 0}^{n - 1}a_ix^i
+$$</p>
+<p>即多项式是若干个 $x$ 的幂次与其对应系数乘积的和。</p>
+<p>该多项式的最高项次数为 $n - 1$，将其称为多项式的「次数」，即 $A(x)$ 可以称作次数为 $n - 1$ 的多项式。</p>
+<p>任何一个严格大于多项式次数的整数，称为多项式的「次数界」，即 $A(x)$ 可以称作次数界为 $n, n + 1, n + 2, \cdots$ 的多项式。</p>
+<p>举个例子的话，$A(x) = 1 + 3x + 3x^2$ 是一个次数为 $2$，次数界大于 $2$ 的多项式。</p>
+<h2>多项式的表达</h2>
+<p>一般来说，我们有「系数表达」和「点值表达」两种方法来表示一个多项式。</p>
+<h3>系数表达</h3>
+<p>即用系数来表达多项式，这也是我们平常所用的方法。</p>
+<p>可以将多项式的系数看做一个 $n$ 维（列）向量：
+$$
+\vec a = (a_0, a_1, \cdots, a_{n - 1})
+$$
+则 $\vec a$ 称作多项式的「系数表达」。</p>
+<p>如上文中例子的系数表达即为 $(1, 3, 3)$。</p>
+<h3>点值表达</h3>
+<p>通俗地说，点值表达就是取 $n$ 个（互不相同的）数代进 $A(x)$ 去求出值来，这样的得到 $n$ 个点，即为多项式的「点值表达」。</p>
+<p>用数学符号来表示：
+$$
+\{(x_i, y_i) \mid i \in [0, n), i \in \mathbb Z\}
+$$
+其中 $y_i = A(x_i)$。</p>
+<p>如上文中例子的一个点值表达为 ${(0, 1), (1, 7), (2, 19)}$。</p>
+<p>多项式的点值表达不是唯一的，因为你可以任意更换求值的点（但总应保证它们是互不相同的），但 $n$ 个点的点值表达一定可以确定一个次数为 $n - 1$ 的多项式（下文中会证明这一点）。</p>
+<h3>相互转换</h3>
+<h4>系数表达 -&gt; 点值表达</h4>
+<p>按照定义，我们取 $n$ 个不同的数代入多项式求值即可，如果采用秦九韶算法（又称霍纳法则）进行单次求值，那么总的复杂度是 $O(n^2)$。</p>
+<p>秦九韶算法，可以在 $O(n)$ 的时间内对多项式单点求值，基于以下公式。</p>
+<p>$$
+A(x_0) = a_0 + x_0(a_1 + x_0(a_2 + \dots + x_0(a_{n-2} + x_0a_{n-1})\dots))
+$$</p>
+<p>我们不妨把这个过程称之为多项式的「求值」。</p>
+<h4>点值表达 -&gt; 系数表达</h4>
+<p>由点值表达到系数表达的转换，称为多项式的「插值」。</p>
+<p>多项式的插值实际上描述了一个解线性方程组的过程，考虑以下矩阵方程。</p>
+<p>$$
+\left[ \begin{matrix}
+1 &amp; x_0 &amp; x_0^2 &amp; \cdots &amp; x_0^{n-1} \\
+1 &amp; x_1 &amp; x_1^2 &amp; \cdots &amp; x_1^{n-1} \\
+\vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots\\
+1 &amp; x_{n-1} &amp; x_{n-1}^2 &amp; \cdots &amp; x_{n-1}^{n-1} 
+\end{matrix} \right] \left[ \begin{matrix}
+a_0 \\
+a_1 \\
+\vdots \\
+a_{n-1} 
+\end{matrix} \right] = \left[ \begin{matrix}
+y_0 \\
+y_1 \\
+\vdots \\
+y_{n-1} 
+\end{matrix} \right]
+$$</p>
+<p>一个可行的方法是求出左边矩阵的逆矩阵，乘到右边去，就可以获得系数表达。</p>
+<p>左边这种形式的矩阵称为「范德蒙德矩阵」，不妨记作 $V(x_0, x_1, \cdots, x_{n - 1})$，那么有 $\vec a = V(x_0, x_1, \cdots, x_{n - 1})^{-1} \vec y$。</p>
+<p>但一个问题是，这个矩阵是否存在逆矩阵，或者说这个方程是否有且有唯一解，。</p>
+<p>为了解决这个问题，我们考虑左边矩阵的行列式，由「范德蒙德矩阵」的性质，可以证明：</p>
+<p>$$
+\det(V(x_0, x_1, \cdots, x_{n - 1})) = \prod_{0 \leq j \lt k \leq n - 1}(x_k - x_j)
+$$</p>
+<p>那么，若 $x_i$ 互不相等，则以上行列式必不为零，也就是说该矩阵可逆，这也就证明了，$n$ 个点的点值表达可以唯一确定一个次数为 $n - 1$ 的多项式。</p>
+<p>因为我们可以在 $O(n^3)$ 的时间内完成矩阵求逆，所以我们得到了一个 $O(n^3)$ 的插值算法。</p>
+<p>更优越一点的方法是使用「拉格朗日插值法」，基于如下公式：</p>
+<p>$$
+A(x) = \sum_{i = 0}^{n - 1}y_i \frac {\prod\limits_{j \not = i}(x - x_j)} {\prod\limits_{j \not = i}(x_i - x_j)}
+$$</p>
+<p>可以看出，通过该公式构造的 $A(x)$ 是满足要求的，对于任意给定的 $k$，将 $x_k$ 代入，和式中只有 $y_k$ 这一项不为零，且系数为 $1$。</p>
+<p>仍以上文中那个多项式的点值表达为例，${(0, 1), (1, 7), (2, 19)}$，根据公式，可以构造出：</p>
+<p>$$
+A(x) = 1 \frac {(x - 1)(x - 2)} {(0 - 1)(0 - 2)} + 7 \frac {(x - 0)(x - 2)} {(1 - 0)(1 - 2)} + 19 \frac {(x - 0)(x - 1)} {(2 - 0)(2 - 1)}
+$$</p>
+<p>读者不妨自行将 $x = 0, 1, 2$ 代入上式以验证其正确性（与这个构造方法的精巧），该式的化简结果确为 $A(x) = 1 + 3x + 3x^2$。</p>
+<p>使用「拉格朗日插值法」的复杂度是 $O(n^2)$ 的。</p>
+<h2>多项式的基本运算</h2>
+<p>我们为什么要花费这么大的力气在这两种表达形式中转换呢，显然这是因为这两种表达形式各有优点。</p>
+<p>多项式的加减法运算较为简单，在系数表达下，就是对应的系数相加减，在点值表达下，就是对应求值点的式值相加减，复杂度均为 $O(n)$，不过多叙述。</p>
+<p>多项式乘法在系数表达下相对复杂，定义如下：</p>
+<p>若有
+$$
+A(x) = \sum_{i = 0}^{n - 1}a_ix^i \\
+B(x) = \sum_{i = 0}^{n - 1}b_ix^i
+$$
+则 $C(x) = A(x)B(x)$ 运算如下：
+$$
+C(x) = \sum_{i = 0}^{2n - 2}c_ix^i
+$$
+其中 
+$$
+c_i = \sum_{k = 0}^ia_kb_{i - k}
+$$</p>
+<p>按照定义进行，在系数表达下，计算多项式乘法的复杂度为 $O(n^2)$。</p>
+<p>然而，在点值表达下，多项式乘法依旧简单，只要把对应求值点的式值相乘即可，复杂度 $O(n)$。要注意的是，由于 $C$ 的次数界是 $2n$ 的，所以我们需要将 $A$ 和 $B$ 的点值表达扩展到 $2n$ 才可以。</p>
+<p>为了快速地计算系数表达下的多项式乘法，我们采取这样的策略：</p>
+<p>首先将系数表达转换为点值表达（求值），然后在点值表达下进行 $O(n)$ 的多项式乘法，然后再从点值表达转换回系数表达（插值）。</p>
+<p>事实上，行文至此，这个策略看上去并不能加速我们的计算，因为我们目前所提及的求值和插值均是 $O(n^2)$ 的。</p>
+<p>一种优化的思路是，不是任选 $n$个毫无关联的值来进行求值与插值，而是通过选取特定的值，利用它们之间的联系来降低复杂度。</p>
+<p><code>快速傅里叶变换 (Fast Fourier Transform, FFT)</code> 就是运用了这一思路，使用<code>单位复数根</code>作为求值点对多项式进行 <code>离散傅里叶变换 (Discrete Fourier Transform, DFT)</code> （求值）和 <code>逆离散傅里叶变换 (Inverse Discrete Fourier Transform, IDFT)</code>（插值），从而加速到 $O(n \log n)$。</p>
+<p>关于 <code>FFT</code> 的细节，在另一篇单独的文章中有具体的阐述，<del>参见<a href="http://hellc.tk/article/fft">快速傅里叶变换 - 学习笔记</a>。</del> 其实还没写完 QWQ。</p>
+
+    </div>
+    
+    <footer class = "ArticleFooter">
+        <div class = "Tags">
+            <i class = "fa fa-tags"></i>
+            Tags: 
+            
+            <span class = "EachTag">
+                <a href = "/tag/OI/"> OI </a>
+            </span>
+            
+            <span class = "EachTag">
+                <a href = "/tag/Learning-Note/"> 学习笔记 </a>
+            </span>
+            
+            <span class = "EachTag">
+                <a href = "/tag/Mathematics/"> 数学 </a>
+            </span>
+            
+            <span class = "EachTag">
+                <a href = "/tag/Polynomial/"> 多项式 </a>
+            </span>
+            
+        </div>
+    </footer>
+</article>
+
+<div class = "Comment">
+    <div class = "ds-thread" data-thread-key = "Polynomial" data-title = "多项式基础 - 学习笔记" data-url = "http://hellc.tk/article/Polynomial/"></div>
+</div>
+
+
+    </div>
+    <aside id = "Sidebar">
+    <div id = "Tags">
+        <h3 class = "Title">
+            Tags
+        </h3>
+
+        <div id = "tagcloud"> <ul>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Test/"> Test </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Starting/"> Starting </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/OI/"> OI </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Search/"> 搜索 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Meet-in-the-Middle/"> Meet-in-the-Middle </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Counting/"> 计数 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/State-Zip/"> 状态压缩 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Data-Structure/"> 数据结构 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Tree/"> 树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Balanced-Tree/"> 平衡树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Treap/"> Treap </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Network-Flow/"> 网络流 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Minimal-Cut/"> 最小割 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Plane-Graph/"> 平面图 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Shortest-Path/"> 最短路 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/BZOJ/"> BZOJ </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/DP/"> DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Linear-Dynamic-Programming/"> 线性DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Dilworth/"> Dilworth定理 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/LIS/"> LIS </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/NOIP/"> NOIP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Bitwise-Dynamic-Programming/"> 位运算DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/NOI/"> NOI </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Tree-Dynamic-Programming/"> 树形DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Iterative-Deepening-Search/"> 迭代加深搜索 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/IDAstar/"> IDAstar </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Search-Pruning/"> 剪枝 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Bitwise/"> 位运算 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Manhattan-Distance/"> 曼哈顿距离 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Monotonic-Queue/"> 单调队列 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Learning-Note/"> 学习笔记 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/UnionFindSet/"> 并查集 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Heuristic-Merge/"> 启发式合并 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Blog/"> Blog </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Hexo/"> Hexo </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Coding/"> Coding </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Git/"> Git </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Geek/"> Geek </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Tree-Chain-Partition/"> 树链剖分 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Segment-Tree/"> 线段树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Traning-In-AH/"> 安师大附中集训 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Coordinate-Dynamic-Programming/"> 坐标型DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/IOI/"> IOI </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/TJOI/"> TJOI </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Digit-Dynamic-Programming/"> 数位DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Graph-Theory/"> 图论 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Spaning-Tree/"> 生成树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/0-1-Fractional-Programming/"> 0-1分数规划 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Bisection/"> 二分 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Note/"> 琐记 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Enumeration/"> 枚举 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Memory-Search/"> 记忆化搜索 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/DFS/"> DFS </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Hash/"> 哈希 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Backtracking/"> 回溯 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Set/"> Set </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/PreTreat/"> 预处理 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Slope-Optimization/"> 斜率优化 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Pack-Dynamic-Programming/"> 背包DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Partition-Dynamic-Programming/"> 划分DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/APIO/"> APIO </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/State-Space-Ssearch/"> 状态空间搜索 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/BFS/"> BFS </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Bidirectional-BFS/"> 双向BFS </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Mathematics/"> 数学 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Derangement/"> 错排 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/SDOI/"> SDOI </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Persistent/"> 可持久化 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Persistent-SegMentTree/"> 可持久化线段树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Offline/"> 离线 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/SCOI/"> SCOI </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Interval-Dynamic-Programmning/"> 区间DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Travels/"> 游记 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Summary/"> 总结 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/GarsiaWachs/"> GarsiaWachs算法 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Binary-Index-Tree/"> 树状数组 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Number-Theory/"> 数论 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Encoding/"> 编码 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Cantor-Expansion/"> 康托展开 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/ZJOI/"> ZJOI </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Complete-Binary-Tree/"> 完全二叉树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/CTSC/"> CTSC </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Greedy/"> 贪心 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/PresentTree/"> 主席树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Value-SegMentTree/"> 权值线段树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Tree-In-Tree/"> 树套树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Expected-Value/"> 期望 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Expected-Value-Dynamic-Programming/"> 期望 DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/CodeForces/"> CodeForces </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Guass/"> 高斯消元 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/DFS-Sequence/"> DFS序 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Polynomial/"> 多项式 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Modui-algorithm/"> 莫队 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/LCA/"> 最近公共祖先 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Sqrt-Algorithm/"> 根号算法 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Tree-Block/"> 树分块 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Number-Funtion/"> 数论函数 </a>
+            </li>
+        
+        </ul> </div>
+    </div>
+    
+    <div id = "FriendLinks">
+        <h3 class = "Title">
+            Friends
+        </h3>
+        
+        
+        <div class = "EachFriendLink">
+            <a href = "https://5261.github.io" target = "_blank"> Hellc </a>
+        </div>
+        
+        <div class = "EachFriendLink">
+            <a href = "http://notebook.myforesight.xyz/" target = "_blank"> SchrodingerZhu </a>
+        </div>
+        
+        <div class = "EachFriendLink">
+            <a href = "http://roller.coding.me/blog" target = "_blank"> roller&#39;s blog </a>
+        </div>
+        
+        <div class = "EachFriendLink">
+            <a href = "http://gavin_nicholas.coding.me" target = "_blank"> Gavin </a>
+        </div>
+        
+        <div class = "EachFriendLink">
+            <a href = "http://iovo7.com/" target = "_blank"> iovo7 </a>
+        </div>
+        
+        <div class = "EachFriendLink">
+            <a href = "http://ilern.cf/" target = "_blank"> ilern </a>
+        </div>
+        
+        <div class = "EachFriendLink">
+            <a href = "http://blog.u-pt.pw/" target = "_blank"> Grapedge </a>
+        </div>
+        
+        <div class = "EachFriendLink">
+            <a href = "http://blog.sulfur6.top" target = "_blank"> Sulfur6 </a>
+        </div>
+        
+        <div class = "EachFriendLink">
+            <a href = "https://yqy.moe" target = "_blank"> yqy&#39;s Blog </a>
+        </div>
+        
+    </div>
+</aside>
+
+</div>
+
+<footer id = "PageFooter">
+    <hr/>
+    <p> Copyright &copy; Hellc 2017. All rights reserved. </p>
+</footer>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','http://o4jiepyc4.qnssl.com/analytics.js','ga');
+
+  ga('create', 'UA-90448321-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+</body>
+
+</html>
+

@@ -1,0 +1,23 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background: #EEEEEE;
+}
+
+a{
+    text-decoration: none;
+    color: #0085FF;
+}
+
+#Wrapper{
+    width: 75%;
+    float: left;
+}
+
+#Content{
+    padding: 30px;
+    overflow: hidden;
+}

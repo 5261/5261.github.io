@@ -1,0 +1,71 @@
+#Archive{
+    padding: 25px;
+    
+    background-color: #FFFFFF;
+    box-shadow: 1px 2px 3px #BBBBBB;
+}
+
+.ArchiveHeader{
+    font-size: 30px;
+}
+
+.ArchiveHeader .Icon{
+    color: #38B7EA;
+}
+
+.TimeLine{
+    margin-left: 10px;
+    border-left: 3px #ECEFF2 solid;
+    
+    position: relative;
+}
+
+.TimeLineItem{
+    margin: 20px;
+    padding: 20px;
+    
+    background-color: #FFFFFF;
+    box-shadow: 1px 1px 2px #BBBBBB;
+    
+    border-top: 0.5px #EEEEEE solid;
+    border-left: 0.5px #EEEEEE solid;
+    
+    /* border: 1px #BBBBBB solid; */
+}
+
+.TimeLineItem::before{
+    content: "";
+    box-shadow: -1px 1px 1px #CCCCCC;
+    width: 10px;
+    height: 10px;
+    transform: rotate(45deg);
+    position: absolute;
+    left: 15.5px;
+    z-index: 1;
+    background-color: #FFFFFF;
+}
+
+.TimeLineNode{
+    background-color: #38B7EA;
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    
+    position: absolute;
+    
+    left: -7px;
+}
+
+.TimeLineItemFooter{
+    margin-top: 15px;
+    font-size: 10px;
+    color: #898D92;
+}
+
+.TimeLineItemFooter a{
+    color: #898D92;
+}
+
+.TimeLineItemFooter a:hover{
+    color: #0085FF;
+}
