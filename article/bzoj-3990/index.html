@@ -156,6 +156,7 @@ var duoshuoQuery = {short_name:"hellc"};
 <p>因为一次交换最多改变两个块的有序状态，所以最多将两个不合法的块交换成合法。</p>
 <p>每次 $DFS$ 时先扫描整个序列，记录不合法块的位置和数量。如果其数量为 1，则尝试交换该块的两半；数量为 2，则尝试四个 半个块 两两交换，共 4 种情况；如果数量大于 2，则这种情况下无解。</p>
 <p>复杂度粗看是 $O(n4^n)$，但其实 4 种情况种最多 1 种成立，所以其实是 $O(n^2)$。</p>
+<p>总结：自己没有想到定序，以后遇到这种天然带有顺序的操作要尝试想一下操作顺序的影响。</p>
 <h3>「AC 代码」</h3>
 <div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
