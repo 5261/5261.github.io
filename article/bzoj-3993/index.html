@@ -163,15 +163,15 @@ var duoshuoQuery = {short_name:"hellc"};
 <span class="cp">#include</span> <span class="cpf">&lt;cmath&gt;</span><span class="cp"></span>
 
 <span class="k">const</span> <span class="kt">double</span> <span class="n">EPS</span> <span class="o">=</span> <span class="mf">1e-6</span><span class="p">;</span>
- 
+
 <span class="kr">inline</span> <span class="kt">int</span> <span class="nf">dcmp</span><span class="p">(</span><span class="kt">double</span> <span class="n">x</span><span class="p">){</span>
     <span class="k">if</span><span class="p">(</span><span class="n">fabs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">EPS</span><span class="p">)</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span> <span class="k">else</span> <span class="k">return</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="o">-</span><span class="mi">1</span> <span class="o">:</span> <span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
- 
+
 <span class="kr">inline</span> <span class="kt">bool</span> <span class="nf">equal</span><span class="p">(</span><span class="kt">double</span> <span class="n">x</span><span class="p">,</span> <span class="kt">double</span> <span class="n">y</span><span class="p">){</span>
     <span class="k">return</span> <span class="o">!</span><span class="n">dcmp</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="p">);</span>
 <span class="p">}</span>
- 
+
 <span class="k">const</span> <span class="kt">int</span> <span class="n">MAX_N</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
 <span class="k">const</span> <span class="kt">int</span> <span class="n">MAX_M</span> <span class="o">=</span> <span class="mi">50</span><span class="p">;</span>
 <span class="k">const</span> <span class="kt">int</span> <span class="n">MAX_NODE</span> <span class="o">=</span> <span class="n">MAX_N</span> <span class="o">+</span> <span class="n">MAX_M</span> <span class="o">+</span> <span class="mi">2</span><span class="p">;</span>
