@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+
+
+
+<html>
+
+<head>
+    <meta charset = "UTF-8">
+    
+    <title> Hellc </title>
+    
+    <link rel = "stylesheet" type = "text/css" href = "https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <link rel = "stylesheet" type = "text/css" href = "/static/css/parts/header.css" />
+    <link rel = "stylesheet" type = "text/css" href = "/static/css/parts/sidebar.css" />
+    <link rel = "stylesheet" type = "text/css" href = "/static/css/parts/main.css" />
+    <link rel = "stylesheet" type = "text/css" href = "/static/css/parts/footer.css" />
+
+    
+
+<link rel = "stylesheet" type = "text/css" href = "/static/css/article-list.css" />
+<link rel = "stylesheet" type = "text/css" href = "/static/css/parts/markdown.css" />
+<link rel = "stylesheet" type = "text/css" href = "/static/css/parts/highlight.css" />
+
+
+    <script type = "text/javascript" src = "//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <script type = "text/javascript" src = "/static/js/tagcloud.js"></script>
+
+    <script type = "text/javascript">
+        var settings = {
+            //height of sphere container
+            height: 300,
+            //width of sphere container
+            width: 300,
+            //radius of sphere
+            radius: 100,
+            //rotation speed
+            speed: 2,
+            //sphere rotations slower
+            slower: 0.9,
+            //delay between update position
+            timer: 5,
+            //dependence of a font size on axis Z
+            fontMultiplier: 20,
+            //tag css stylies on mouse over
+            hoverStyle: {
+                border: 'none',
+                color: '#0b2e6f'
+            },
+            //tag css stylies on mouse out
+            mouseOutStyle: {
+                border: '',
+                color: ''
+            }
+        };
+    
+        $(document).ready(function(){
+            $('#tagcloud').tagoSphere(settings);
+        });
+    </script>
+
+    
+
+<script type = "text/javascript" src = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type = "text/x-mathjax-config"> MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
+
+
+</head>
+
+<body>
+
+
+
+<header id = "PageHeader">
+
+    <div id = "BlogHeader">
+        <div id = "BlogImgLogo">
+            <img src = "/static/img/HellcLogo.jpg" alt = "Hellc"/>
+        </div>
+        
+        <div id = "BlogTextLogo">
+            <div id = "BlogName">
+                <h1> Hellc </h1>
+            </div>
+            
+            <div id = "BlogMotto">
+                <h2> Fly in the blue and free sky. </h2>
+            </div>
+        </div>
+        
+    </div>
+
+    <nav id = "BlogNav">
+        <ul>
+            <li>
+                <a href = "/" class = "NavLink"> Home </a>
+            </li>
+
+            <li> 
+                <a href = "/archive/" class = "NavLink"> Archive </a>
+            </li>
+
+            <li>
+                <a href = "/about/" class = "NavLink"> About </a>
+            </li>
+        </ul>
+    </nav>
+
+</header>
+
+
+<div id = "Content">
+    <div id = Wrapper>
+        
+
+<div id = "Articles">
+    
+    <article class = "Article">
+        <header class = "ArticleHeader">
+            <div class = "Title">
+                <h1>
+                    <a href = "/article/bzoj-3993/">
+                        [BZOJ 3993] 星际战争 - 二分 + 网络流
+                    </a>
+                </h1>
+            </div>
+        
+            <div class = "Info">
+                <span class = "Category">
+                    OI
+                </span>
+        
+                <span class = "Author">
+                    Hellc
+                </span>
+        
+                <span class = "CreateTime">
+                    2017-02-22 19:20
+                </span>
+            </div>
+        </header>
+    
+        <div class = "Summary Markdown">
+            <h3>「题目描述」</h3>
+<p>3333 年，在银河系的某星球上，X 军团和 Y 军团正在激烈地作战。</p>
+<p>在战斗的某一阶段，Y 军团一共派遣了 $N$ 个巨型机器人进攻 $X$ 军 团的阵地。</p>
+<p>其中第 $i$ 个巨型机器人的装甲值为$A_i$ ，当一个巨型机器人的装甲值减少到 0 或者以下时，这个巨型机器人就被摧毁了。</p>
+<p>X 军团有 $M$ 个激光武器，其中第 $i$ 个激光武器每秒可以削减一个巨型机器人 $B_i$ 的装甲值。</p>
+<p>激光武器的攻击是连续的。</p>
+<p>这种激光武器非常奇怪，一个激光武器只能攻击一些特定的敌人。</p>
+<p>Y 军团看到自己的巨型机器人被 X 军团一个一个消灭，他们急需下达更多的指令。</p>
+<p>为了这个目标，Y 军团需要知道 X 军团最少需要用多长时间才能将 Y 军团的所有巨型机器人摧毁。</p>
+<p>但是他们不会计算这个问题，因此向你求助。</p>
+<h3>「题目链接」</h3>
+<p><a href="http://www.lydsy.com/JudgeOnline/problem.php?id=3993">BZOJ 3993</a> 星际战争 「SDOI 2015」</p>
+
+        </div>
+        
+        <footer class = "ArticleFooter">
+            <a href = "/article/bzoj-3993/" class = "ReadMore"> Read More </a>
+        </footer>
+    </article>
+    
+    <article class = "Article">
+        <header class = "ArticleHeader">
+            <div class = "Title">
+                <h1>
+                    <a href = "/article/bzoj-3992/">
+                        [BZOJ 3992] 序列统计 - 原根 + 生成函数 + FNT
+                    </a>
+                </h1>
+            </div>
+        
+            <div class = "Info">
+                <span class = "Category">
+                    OI
+                </span>
+        
+                <span class = "Author">
+                    Hellc
+                </span>
+        
+                <span class = "CreateTime">
+                    2017-02-22 18:39
+                </span>
+            </div>
+        </header>
+    
+        <div class = "Summary Markdown">
+            <h3>「题目描述」</h3>
+<p>小C 有一个集合 $S$ ，里面的元素都是小于 $M$ 的非负整数。他用程序编写了一个数列生成器，可以生成一个长度为 $N$ 的数列，数列中的每个数都属于集合 $S$ 。小C 用这个生成器生成了许多这样的数列。</p>
+<p>但是 小C 有一个问题需要你的帮助：给定整数 $x$，求所有可以生成出的，且满足数列中所有数的乘积 $\mod M$ 的值等于 $x$ 的不同的数列的有多少个。</p>
+<p>小C 认为，两个数列 $A$ 和 $B$ 不同，当且仅当至少存在一个整数 $i$ ，满足 $A_i \not = Bi$ 。</p>
+<p>另外，小C 认为这个问题的答案可能很大，因此他只需要你帮助他求出答案 $\mod 1004535809$ 的值就可以了。</p>
+<p>$1 \leq N \leq 10^9, 3 \leq M \leq 8000,M\text{ is a prime}, 1 \leq x \leq M - 1$ 。</p>
+<h3>「题目链接」</h3>
+<p><a href="http://www.lydsy.com/JudgeOnline/problem.php?id=3992">BZOJ 3992</a> 序列统计 「SDOI 2015」</p>
+
+        </div>
+        
+        <footer class = "ArticleFooter">
+            <a href = "/article/bzoj-3992/" class = "ReadMore"> Read More </a>
+        </footer>
+    </article>
+    
+    <article class = "Article">
+        <header class = "ArticleHeader">
+            <div class = "Title">
+                <h1>
+                    <a href = "/article/bzoj-3991/">
+                        [BZOJ 3991] 寻宝游戏 - 虚树 + DFS序
+                    </a>
+                </h1>
+            </div>
+        
+            <div class = "Info">
+                <span class = "Category">
+                    OI
+                </span>
+        
+                <span class = "Author">
+                    Hellc
+                </span>
+        
+                <span class = "CreateTime">
+                    2017-02-22 10:13
+                </span>
+            </div>
+        </header>
+    
+        <div class = "Summary Markdown">
+            <h3>「题目描述」</h3>
+<p>给定一棵树，树中有一些关键点，每次询问 任取一点出发 **经过所有关键点 **并回到起点的 最短路径长度。</p>
+<p>要求支持以下修改：将一个点设为关键点，或者取消一个关键点。</p>
+<p>点数 $n \leq 100000$ ，操作数 $m \leq 100000$ 。</p>
+<h3>「题目链接」</h3>
+<p><a href="http://www.lydsy.com/JudgeOnline/problem.php?id=3991">BZOJ 3991</a> 寻宝游戏 「SDOI 2015」</p>
+
+        </div>
+        
+        <footer class = "ArticleFooter">
+            <a href = "/article/bzoj-3991/" class = "ReadMore"> Read More </a>
+        </footer>
+    </article>
+    
+    <article class = "Article">
+        <header class = "ArticleHeader">
+            <div class = "Title">
+                <h1>
+                    <a href = "/article/bzoj-3990/">
+                        [BZOJ 3990] 排序 - DFS
+                    </a>
+                </h1>
+            </div>
+        
+            <div class = "Info">
+                <span class = "Category">
+                    OI
+                </span>
+        
+                <span class = "Author">
+                    Hellc
+                </span>
+        
+                <span class = "CreateTime">
+                    2017-02-22 07:55
+                </span>
+            </div>
+        </header>
+    
+        <div class = "Summary Markdown">
+            <h3>「题目描述」</h3>
+<p>小A 有一个 $1-2^N$ 的排列 $A[1 \dots 2^N]$ ，他希望将 $A$ 数组从小到大排序。</p>
+<p>小A 可以执行的操作有 $N$ 种，每种操作最多可以执行一次，对于所有的 $i(1 \leq i \leq N)$，第 $i$ 种操作为将序列从左到右划分为 $2^{N-i+1}$ 段，每段恰好包括 $2^{i-1}$个数，然后整体交换其中两段。</p>
+<p>小A 想知道可以将数组 $A$ 从小到大排序的不同的操作序列有多少个，小A 认为两个操作序列不同，当且仅当操作个数不同，或者至少一个操作不同（种类不同或者操作位置不同）。</p>
+<p>下面是一个操作事例:</p>
+<p>$N=3, A[1 \dots 8] = [3, 6, 1, 2, 7, 8, 5, 4]$</p>
+<p>第一次操作，执行第 3 种操作，交换 $A[1 \dots 4]$ 和 $A[5 \dots 8]$，交换后的 $A[1 \dots 8]$为 $[7,8,5,4,3,6,1,2]$ 。</p>
+<p>第二次操作，执行第 1 种操作，交换 $A[3]$ 和 $A[5]$ ，交换后的 $A[1 \dots 8]$ 为 $[7, 8, 3, 4, 5, 6, 1, 2] $。</p>
+<p>第三次操作，执行第 2 种操作，交换 $A[1..2]$ 和 $A[7..8]$,交换后的 $A[1..8]$ 为 $[1,2,3,4,5,6,7,8] $。</p>
+<h3>「题目链接」</h3>
+<p><a href="http://www.lydsy.com/JudgeOnline/problem.php?id=3990">BZOJ 3990</a> 排序 「SDOI 2015」</p>
+
+        </div>
+        
+        <footer class = "ArticleFooter">
+            <a href = "/article/bzoj-3990/" class = "ReadMore"> Read More </a>
+        </footer>
+    </article>
+    
+    <article class = "Article">
+        <header class = "ArticleHeader">
+            <div class = "Title">
+                <h1>
+                    <a href = "/article/bzoj-2820/">
+                        [BZOJ 2820] YY 的 gcd - 数论函数
+                    </a>
+                </h1>
+            </div>
+        
+            <div class = "Info">
+                <span class = "Category">
+                    OI
+                </span>
+        
+                <span class = "Author">
+                    Hellc
+                </span>
+        
+                <span class = "CreateTime">
+                    2017-01-22 05:21
+                </span>
+            </div>
+        </header>
+    
+        <div class = "Summary Markdown">
+            <h4>【题目描述】</h4>
+<p>给定 $n, m$ ，求：
+$$
+\sum_{i = 1}^n\sum_{j = 1}^m [\gcd(i, j) = p], \text{p is prime}
+$$
+$n, m \leq 10^7$ 。</p>
+<p>$T$ 组询问，$T \leq 10^4$。</p>
+<h4>【题目链接】</h4>
+<p><a href="http://www.lydsy.com/JudgeOnline/problem.php?id=2820">BZOJ 2820</a> YY 的 gcd</p>
+
+        </div>
+        
+        <footer class = "ArticleFooter">
+            <a href = "/article/bzoj-2820/" class = "ReadMore"> Read More </a>
+        </footer>
+    </article>
+    
+    <article class = "Article">
+        <header class = "ArticleHeader">
+            <div class = "Title">
+                <h1>
+                    <a href = "/article/bzoj-1011/">
+                        [BZOJ 1011] Zap - 数论函数
+                    </a>
+                </h1>
+            </div>
+        
+            <div class = "Info">
+                <span class = "Category">
+                    OI
+                </span>
+        
+                <span class = "Author">
+                    Hellc
+                </span>
+        
+                <span class = "CreateTime">
+                    2017-01-15 13:17
+                </span>
+            </div>
+        </header>
+    
+        <div class = "Summary Markdown">
+            <h4>【题目描述】</h4>
+<p>给定 $n. m, k$，求：
+$$
+\sum_{i = 1}^n \sum_{j = 1}^m [\gcd(i, j) = k]
+$$
+$n, m, k \leq 5 \times 10^4$</p>
+<p>有 $T$ 组询问，$T \leq 5 \times 10^4$。</p>
+<h4>【题目链接】</h4>
+<p><a href="http://www.lydsy.com/JudgeOnline/problem.php?id=1011">BZOJ 1011</a> Zap</p>
+
+        </div>
+        
+        <footer class = "ArticleFooter">
+            <a href = "/article/bzoj-1011/" class = "ReadMore"> Read More </a>
+        </footer>
+    </article>
+    
+    <article class = "Article">
+        <header class = "ArticleHeader">
+            <div class = "Title">
+                <h1>
+                    <a href = "/article/bzoj-2226/">
+                        [BZOJ 2226] LCMSum - 数论函数
+                    </a>
+                </h1>
+            </div>
+        
+            <div class = "Info">
+                <span class = "Category">
+                    OI
+                </span>
+        
+                <span class = "Author">
+                    Hellc
+                </span>
+        
+                <span class = "CreateTime">
+                    2017-01-15 07:40
+                </span>
+            </div>
+        </header>
+    
+        <div class = "Summary Markdown">
+            <h4>【题目描述】</h4>
+<p>给定 $n$，求：
+$$
+\sum_{i = 1}^n \text{lcm}(i, n)
+$$
+$1 \leq n \leq 10^6$</p>
+<p>$T$ 组询问，$1 \leq T \leq 3 \times 10^5$</p>
+<h4>【题目链接】</h4>
+<p><a href="http://www.lydsy.com/JudgeOnline/problem.php?id=2226">BZOJ 2705</a> LCMSum</p>
+
+        </div>
+        
+        <footer class = "ArticleFooter">
+            <a href = "/article/bzoj-2226/" class = "ReadMore"> Read More </a>
+        </footer>
+    </article>
+    
+    <article class = "Article">
+        <header class = "ArticleHeader">
+            <div class = "Title">
+                <h1>
+                    <a href = "/article/bzoj-2705/">
+                        [BZOJ 2705] Longge的问题 - 数论函数
+                    </a>
+                </h1>
+            </div>
+        
+            <div class = "Info">
+                <span class = "Category">
+                    OI
+                </span>
+        
+                <span class = "Author">
+                    Hellc
+                </span>
+        
+                <span class = "CreateTime">
+                    2017-01-15 02:01
+                </span>
+            </div>
+        </header>
+    
+        <div class = "Summary Markdown">
+            <h4>【题目描述】</h4>
+<p>给定 $n$，求：</p>
+<p>$$
+\sum_{i = 1}^n \gcd(i, n)
+$$</p>
+<p>$1 \leq n \leq 2^{32}$</p>
+<h4>【题目链接】</h4>
+<p><a href="http://www.lydsy.com/JudgeOnline/problem.php?id=1705">BZOJ 2705</a> Longge的问题 【SDOI 2010】</p>
+
+        </div>
+        
+        <footer class = "ArticleFooter">
+            <a href = "/article/bzoj-2705/" class = "ReadMore"> Read More </a>
+        </footer>
+    </article>
+    
+    <article class = "Article">
+        <header class = "ArticleHeader">
+            <div class = "Title">
+                <h1>
+                    <a href = "/article/bzoj-1257/">
+                        [BZOJ 1257] 余数之和
+                    </a>
+                </h1>
+            </div>
+        
+            <div class = "Info">
+                <span class = "Category">
+                    OI
+                </span>
+        
+                <span class = "Author">
+                    Hellc
+                </span>
+        
+                <span class = "CreateTime">
+                    2017-01-14 03:16
+                </span>
+            </div>
+        </header>
+    
+        <div class = "Summary Markdown">
+            <h4>【题目描述】</h4>
+<p>给定 $n, k$，求：
+$$ \sum_{i = 1}^n k\ \text{mod}\ i $$
+$ 1 \leq n, k \leq 10^{9} $</p>
+<h4>【题目链接】</h4>
+<p><a href="http://www.lydsy.com/JudgeOnline/problem.php?id=1257">BZOJ 1257</a> 余数之和 【CQOI 2007】</p>
+
+        </div>
+        
+        <footer class = "ArticleFooter">
+            <a href = "/article/bzoj-1257/" class = "ReadMore"> Read More </a>
+        </footer>
+    </article>
+    
+    <article class = "Article">
+        <header class = "ArticleHeader">
+            <div class = "Title">
+                <h1>
+                    <a href = "/article/bzoj-1086/">
+                        [BZOJ 1086] 王室联邦 - 树分块
+                    </a>
+                </h1>
+            </div>
+        
+            <div class = "Info">
+                <span class = "Category">
+                    OI
+                </span>
+        
+                <span class = "Author">
+                    Hellc
+                </span>
+        
+                <span class = "CreateTime">
+                    2016-12-26 06:03
+                </span>
+            </div>
+        </header>
+    
+        <div class = "Summary Markdown">
+            <h4>【题目描述】</h4>
+<p>余人国的国王想重新编制他的国家。</p>
+<p>他想把他的国家划分成若干个省，每个省都由他们王室联邦的一个成
+员来管理。</p>
+<p>他的国家有 $n$ 个城市，编号为 $1..n$ 。一些城市之间有道路相连，任意两个不同的城市之间有且仅有一条直接或间接的道路。</p>
+<p>为了防止管理太过分散，每个省至少要有 $B$ 个城市，为了能有效的管理，每个省最多只有 $3B$ 个城市。</p>
+<p>每个省必须有一个省会，这个省会可以位于省内，也可以在该省外。</p>
+<p>但是该省的任意一个城市到达省会所经过的道路上的城市（除了最后一个城市，即该省省会）都必须属于该省。</p>
+<p>一个城市可以作为多个省的省会。</p>
+<p>聪明的你快帮帮这个国王吧！</p>
+<h4>【题目链接】</h4>
+<p><a href="http://www.lydsy.com/JudgeOnline/problem.php?id=1086">BZOJ 1086</a> 王室联邦 【SCOI 2005】</p>
+
+        </div>
+        
+        <footer class = "ArticleFooter">
+            <a href = "/article/bzoj-1086/" class = "ReadMore"> Read More </a>
+        </footer>
+    </article>
+    
+    
+    <footer class = "ArticlesFooter">
+        <nav class = "PageNav">
+            
+            
+            
+                
+                    <span class = "PageNavLink Curr">
+                        1
+                    </span>
+                
+            
+                
+                    <a class = "PageNavLink" href = "/page/2/">
+                        2
+                    </a>
+                
+            
+                
+                    <a class = "PageNavLink" href = "/page/3/">
+                        3
+                    </a>
+                
+            
+                
+                    <a class = "PageNavLink" href = "/page/4/">
+                        4
+                    </a>
+                
+            
+                
+                    <a class = "PageNavLink" href = "/page/5/">
+                        5
+                    </a>
+                
+            
+                
+                    <a class = "PageNavLink" href = "/page/6/">
+                        6
+                    </a>
+                
+            
+                
+                    <a class = "PageNavLink" href = "/page/7/">
+                        7
+                    </a>
+                
+            
+                
+                    <a class = "PageNavLink" href = "/page/8/">
+                        8
+                    </a>
+                
+            
+                
+                    <a class = "PageNavLink" href = "/page/9/">
+                        9
+                    </a>
+                
+            
+                
+                    <a class = "PageNavLink" href = "/page/10/">
+                        10
+                    </a>
+                
+            
+            
+            
+                <a class = "PageNavLink Next" href = "/page/2/">
+                    Next
+                </a>
+            
+        </nav>
+    </footer>
+</div>
+
+
+    </div>
+    <aside id = "Sidebar">
+    <div id = "Tags">
+        <h3 class = "Title">
+            Tags
+        </h3>
+
+        <div id = "tagcloud"> <ul>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Test/"> Test </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Starting/"> Starting </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/OI/"> OI </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Search/"> 搜索 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Meet-in-the-Middle/"> Meet-in-the-Middle </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Counting/"> 计数 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/State-Zip/"> 状态压缩 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Data-Structure/"> 数据结构 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Tree/"> 树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Balanced-Tree/"> 平衡树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Treap/"> Treap </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Network-Flow/"> 网络流 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Minimal-Cut/"> 最小割 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Plane-Graph/"> 平面图 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Shortest-Path/"> 最短路 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/BZOJ/"> BZOJ </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/DP/"> DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Linear-Dynamic-Programming/"> 线性DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Dilworth/"> Dilworth定理 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/LIS/"> LIS </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/NOIP/"> NOIP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Bitwise-Dynamic-Programming/"> 位运算DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/NOI/"> NOI </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Tree-Dynamic-Programming/"> 树形DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Iterative-Deepening-Search/"> 迭代加深搜索 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/IDAstar/"> IDAstar </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Search-Pruning/"> 剪枝 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Bitwise/"> 位运算 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Manhattan-Distance/"> 曼哈顿距离 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Monotonic-Queue/"> 单调队列 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Learning-Note/"> 学习笔记 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/UnionFindSet/"> 并查集 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Heuristic-Merge/"> 启发式合并 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Blog/"> Blog </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Hexo/"> Hexo </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Coding/"> Coding </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Git/"> Git </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Geek/"> Geek </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Tree-Chain-Partition/"> 树链剖分 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Segment-Tree/"> 线段树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Traning-In-AH/"> 安师大附中集训 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Coordinate-Dynamic-Programming/"> 坐标型DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/IOI/"> IOI </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/TJOI/"> TJOI </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Digit-Dynamic-Programming/"> 数位DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Graph-Theory/"> 图论 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Spaning-Tree/"> 生成树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/0-1-Fractional-Programming/"> 0-1分数规划 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Bisection/"> 二分 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Note/"> 琐记 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Enumeration/"> 枚举 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Memory-Search/"> 记忆化搜索 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/DFS/"> DFS </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Hash/"> 哈希 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Backtracking/"> 回溯 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Set/"> Set </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/PreTreat/"> 预处理 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Slope-Optimization/"> 斜率优化 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Pack-Dynamic-Programming/"> 背包DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Partition-Dynamic-Programming/"> 划分DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/APIO/"> APIO </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/State-Space-Ssearch/"> 状态空间搜索 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/BFS/"> BFS </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Bidirectional-BFS/"> 双向BFS </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Mathematics/"> 数学 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Derangement/"> 错排 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/SDOI/"> SDOI </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Persistent/"> 可持久化 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Persistent-SegMentTree/"> 可持久化线段树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Offline/"> 离线 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/SCOI/"> SCOI </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Interval-Dynamic-Programmning/"> 区间DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Travels/"> 游记 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Summary/"> 总结 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/GarsiaWachs/"> GarsiaWachs算法 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Binary-Index-Tree/"> 树状数组 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Number-Theory/"> 数论 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Encoding/"> 编码 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Cantor-Expansion/"> 康托展开 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/ZJOI/"> ZJOI </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Complete-Binary-Tree/"> 完全二叉树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/CTSC/"> CTSC </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Greedy/"> 贪心 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/PresentTree/"> 主席树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Value-SegMentTree/"> 权值线段树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Tree-In-Tree/"> 树套树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Expected-Value/"> 期望 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Expected-Value-Dynamic-Programming/"> 期望 DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/CodeForces/"> CodeForces </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Guass/"> 高斯消元 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/DFS-Sequence/"> DFS序 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Polynomial/"> 多项式 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Modui-algorithm/"> 莫队 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/LCA/"> 最近公共祖先 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Sqrt-Algorithm/"> 根号算法 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Tree-Block/"> 树分块 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Number-Funtion/"> 数论函数 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/FFT/"> FFT </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/FNT/"> FNT </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Generating-Function/"> 生成函数 </a>
+            </li>
+        
+        </ul> </div>
+    </div>
+    
+    <div id = "FriendLinks">
+        <h3 class = "Title">
+            Friends
+        </h3>
+        
+        
+        <div class = "EachFriendLink">
+            <a href = "https://5261.github.io" target = "_blank"> Hellc </a>
+        </div>
+        
+        <div class = "EachFriendLink">
+            <a href = "http://notebook.myforesight.xyz/" target = "_blank"> SchrodingerZhu </a>
+        </div>
+        
+        <div class = "EachFriendLink">
+            <a href = "http://roller.coding.me/blog" target = "_blank"> roller&#39;s blog </a>
+        </div>
+        
+        <div class = "EachFriendLink">
+            <a href = "http://gavin_nicholas.coding.me" target = "_blank"> Gavin </a>
+        </div>
+        
+        <div class = "EachFriendLink">
+            <a href = "http://iovo7.com/" target = "_blank"> iovo7 </a>
+        </div>
+        
+        <div class = "EachFriendLink">
+            <a href = "http://ilern.cf/" target = "_blank"> ilern </a>
+        </div>
+        
+        <div class = "EachFriendLink">
+            <a href = "http://blog.u-pt.pw/" target = "_blank"> Grapedge </a>
+        </div>
+        
+        <div class = "EachFriendLink">
+            <a href = "http://blog.sulfur6.top" target = "_blank"> Sulfur6 </a>
+        </div>
+        
+        <div class = "EachFriendLink">
+            <a href = "https://yqy.moe" target = "_blank"> yqy&#39;s Blog </a>
+        </div>
+        
+    </div>
+</aside>
+
+</div>
+
+<footer id = "PageFooter">
+    <hr/>
+    <p> Copyright &copy; Hellc 2017. All rights reserved. </p>
+</footer>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','http://o4jiepyc4.qnssl.com/analytics.js','ga');
+
+  ga('create', 'UA-90448321-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+</body>
+
+</html>
+

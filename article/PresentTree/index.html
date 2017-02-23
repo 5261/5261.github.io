@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+
+
+
+<html>
+
+<head>
+    <meta charset = "UTF-8">
+    
+    <title> Hellc </title>
+    
+    <link rel = "stylesheet" type = "text/css" href = "https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <link rel = "stylesheet" type = "text/css" href = "/static/css/parts/header.css" />
+    <link rel = "stylesheet" type = "text/css" href = "/static/css/parts/sidebar.css" />
+    <link rel = "stylesheet" type = "text/css" href = "/static/css/parts/main.css" />
+    <link rel = "stylesheet" type = "text/css" href = "/static/css/parts/footer.css" />
+
+    
+
+<link rel = "stylesheet" type = "text/css" href = "/static/css/article-detail.css" />
+<link rel = "stylesheet" type = "text/css" href = "/static/css/parts/markdown.css" />
+<link rel = "stylesheet" type = "text/css" href = "/static/css/parts/highlight.css" />
+
+
+    <script type = "text/javascript" src = "//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <script type = "text/javascript" src = "/static/js/tagcloud.js"></script>
+
+    <script type = "text/javascript">
+        var settings = {
+            //height of sphere container
+            height: 300,
+            //width of sphere container
+            width: 300,
+            //radius of sphere
+            radius: 100,
+            //rotation speed
+            speed: 2,
+            //sphere rotations slower
+            slower: 0.9,
+            //delay between update position
+            timer: 5,
+            //dependence of a font size on axis Z
+            fontMultiplier: 20,
+            //tag css stylies on mouse over
+            hoverStyle: {
+                border: 'none',
+                color: '#0b2e6f'
+            },
+            //tag css stylies on mouse out
+            mouseOutStyle: {
+                border: '',
+                color: ''
+            }
+        };
+    
+        $(document).ready(function(){
+            $('#tagcloud').tagoSphere(settings);
+        });
+    </script>
+
+    
+<script type = "text/javascript" src = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type = "text/x-mathjax-config"> MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
+
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"hellc"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+</script>
+
+
+</head>
+
+<body>
+
+
+
+<header id = "PageHeader">
+
+    <div id = "BlogHeader">
+        <div id = "BlogImgLogo">
+            <img src = "/static/img/HellcLogo.jpg" alt = "Hellc"/>
+        </div>
+        
+        <div id = "BlogTextLogo">
+            <div id = "BlogName">
+                <h1> Hellc </h1>
+            </div>
+            
+            <div id = "BlogMotto">
+                <h2> Fly in the blue and free sky. </h2>
+            </div>
+        </div>
+        
+    </div>
+
+    <nav id = "BlogNav">
+        <ul>
+            <li>
+                <a href = "/" class = "NavLink"> Home </a>
+            </li>
+
+            <li> 
+                <a href = "/archive/" class = "NavLink"> Archive </a>
+            </li>
+
+            <li>
+                <a href = "/about/" class = "NavLink"> About </a>
+            </li>
+        </ul>
+    </nav>
+
+</header>
+
+
+<div id = "Content">
+    <div id = Wrapper>
+        
+<article class = "Article">
+    
+    <header class = "ArticleHeader">
+        <div class = "Title">
+            <a href = "#">
+                <h2> 主席树 - 学习笔记 </h2>
+            </a>
+        </div>
+    </header>
+    
+    <div class = "ArticleBody Markdown">
+        <p>本文主要讨论以 <strong>主席树</strong> 这种数据结构解决 <strong>静态区间排名</strong> 的问题。</p>
+<!--more-->
+<h3>问题</h3>
+<p>给定一个序列，每次询问某个区间 $[l, r)$ 中，排名为 $k$ 的元素为多少。</p>
+<h3>考虑削弱版本</h3>
+<p>假如每次询问不是指定区间，而是询问 <strong>整个序列</strong> 上排名为 $k$ 的元素，那么问题还是比较简单，可以使用 <strong>权值线段树</strong> 解决。</p>
+<h3>权值线段树？</h3>
+<p>权值线段树与传统的区间线段树是不同的。</p>
+<p>一个权值线段树上的节点，依然代表一段区间，不过代表的是值域中的一段区间，维护了 <strong>值</strong> 在此范围内的所有元素的信息。</p>
+<p>而传统的区间线段树代表的是位置中的一段区间，维护的是 <strong>位置</strong> 在此区间内的所有元素的信息。</p>
+<p>对于本题而言，在权值线段树上，我们可以维护每个区间内元素出现的次数，查询的时候，类似平衡树，根据左子树次数和目标排名的大小关系，决定向左走还是向右走，复杂度 $O(\log n)$。</p>
+<p>一般的，权值线段树的区间是对 <strong>值域</strong> 开的，有时值域会过大，在时间上和空间上都难以承受，此时有两种解决方案：</p>
+<ul>
+<li>对序列进行 <strong>离散化</strong>，将值域映射到 $ O(n) $ 级别。</li>
+<li>线段树 <strong>动态开节点</strong>，只有修改或查询涉及到的节点才真正的创建出来。</li>
+</ul>
+<h3>如何支持某个区间上的操作？</h3>
+<p>我们想，假如对于每个询问区间，我们能够拥有对应的权值线段树，即只把这个区间中的元素插入进去，所得到的树，那样的话就好了。</p>
+<p>~~我们可以对所有的区间分别建立线段树，然后查询就好啦！~~</p>
+<p>显然上面是胡扯，因为区间数量是 $O(n^2)$ 的。</p>
+<p>我们考虑前缀和的思想，对每个前缀序列建立权值线段树，然后通过 <strong>前缀线段树</strong> 相减即可得到任意区间。</p>
+<p>具体来说，令 $T_i$ 表示将序列上前 $i$ 个元素插入所形成的权值线段树（即对应区间 $[0, i)$），那么假如我们询问区间 $[l, r)$，只需要用 $T_r$ 减去 $T_l$ 即可。</p>
+<p>要注意这些线段树的形态是完全相同的，因为都是对值域建立，所谓线段树的相减，其实是指的对应节点上的信息相减，这便需要维护的信息满足 <strong>区间减法</strong> ，这也就是使用主席树的一个重要条件。</p>
+<p>这个问题就这样解决了吗？
+不，还有一个问题需要考虑，那就是空间问题，以上算法的空间复杂度是 $O(n^2\log n)$的，这难以承受！</p>
+<p>我们可以使用 可持久化/函数式 思想解决这个问题。</p>
+<h3>可持久化？ 函数式？</h3>
+<p>我们注意到，在上述算法的前缀线段树中，任意相邻两棵树，仅有一个元素的差异，而一个元素在线段树上只会影响数量为 $O(\log n)$ 的节点，这是从根出发的一条链，而其他的部分，与上一颗完全相同，既然完全相同，为什么要复制一份呢？直接拿来用不就可以了吗！</p>
+<p>也就是说，每次插入一个元素，我们仅新建一条规模为 $O(\log n)$ 的链，而其他部分，直接指向上一课线段树的相应节点。</p>
+<p>这便是 可持久化/函数式 的思想，每次所谓修改操作不改动原数据结构，而是（只）新建所有变化的部分，相当于使之支持历史版本的查询，并通过它们之间的共有数据来降低空间与时间消耗。</p>
+<p>至此，问题通过主席树完美解决，总的时间和空间复杂度都为 $O(n\log n)$。</p>
+<h3>关于本问题的带修改版本</h3>
+<p>如果要求支持修改某一位上的数，那么主席树就无法胜任了。</p>
+<p>参阅 <a href="http://hellc.tk/article/Modifiable-Range-Ranking/">带修改的区间排名 - 学习笔记</a></p>
+<h3>例题</h3>
+<p><a href="http://poj.org/problem?id=2104">POJ 2104</a> k-th Number</p>
+<p>模板题。</p>
+<p>动态分配内存会 T，需要静态分配，可以写内存池。</p>
+<p>讲讲做这题的经历，学了主席树，信心满满的写好这题，交上去，TLE，想到是值域过大的问题，于是离散化一发，交上去，TLE，于是又写了动态开点，交上去，TLE，不久想到是动态分配内存的问题，于是写好内存池，交上去，还是 TLE，怀疑读入问题，写了一发读入优化，依旧 TLE，怀疑是编译器的锅，于是从 <code>G++</code> 改到 <code>C++</code>，TLE。</p>
+<p>然后开始怀疑人生...</p>
+<p>最后历尽艰辛，问题终于找到，线段树的静态节点我只开到了 $O(n)$，然而此题的空间复杂度是 $O(n\log n)$ 的...</p>
+<p>（我写内存池时，预分配空间不够是还是动态开，所以会 TLE 而不会 RE）</p>
+<p>真想给自己一刀...</p>
+<p>以下是~~（加了各种奇怪东西的）~~代码，只看<code>SegmentTree</code>和<code>PresentTree</code>这两个结构体的代码就好啦：</p>
+<pre><code class="language-c++"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;cstdio&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">IO</span><span class="p">{</span>
+    <span class="k">const</span> <span class="kt">int</span> <span class="n">IN_SIZE</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">15</span><span class="p">,</span> <span class="n">OUT_SIZE</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">15</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">inBuf</span><span class="p">[</span><span class="n">IN_SIZE</span><span class="p">],</span> <span class="n">outBuf</span><span class="p">[</span><span class="n">OUT_SIZE</span><span class="p">];</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">S</span><span class="p">,</span> <span class="o">*</span><span class="n">T</span><span class="p">,</span> <span class="n">ch</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">now</span><span class="p">;</span>
+
+    <span class="kr">inline</span> <span class="kt">void</span> <span class="nf">init</span><span class="p">(){</span>
+        <span class="n">S</span> <span class="o">=</span> <span class="n">T</span> <span class="o">=</span> <span class="n">inBuf</span><span class="p">;</span>
+        <span class="n">now</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kr">inline</span> <span class="kt">char</span> <span class="nf">getchar</span><span class="p">(){</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">S</span> <span class="o">==</span> <span class="n">T</span><span class="p">)</span> <span class="n">S</span> <span class="o">=</span> <span class="n">inBuf</span><span class="p">,</span> <span class="n">T</span> <span class="o">=</span> <span class="n">inBuf</span> <span class="o">+</span> <span class="n">fread</span><span class="p">(</span><span class="n">inBuf</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">IN_SIZE</span><span class="p">,</span> <span class="n">stdin</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">S</span> <span class="o">==</span> <span class="n">T</span><span class="p">)</span> <span class="k">return</span> <span class="n">EOF</span><span class="p">;</span>
+        <span class="k">return</span> <span class="o">*</span><span class="n">S</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">Int</span><span class="o">&gt;</span> <span class="kr">inline</span> <span class="kt">void</span> <span class="n">readint</span><span class="p">(</span><span class="n">Int</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">){</span>
+        <span class="kt">int</span> <span class="n">f</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="n">ch</span> <span class="o">=</span> <span class="n">getchar</span><span class="p">();</span> <span class="n">ch</span> <span class="o">&gt;</span> <span class="sc">&#39;9&#39;</span> <span class="o">||</span> <span class="n">ch</span> <span class="o">&lt;</span> <span class="sc">&#39;0&#39;</span><span class="p">;</span> <span class="n">ch</span> <span class="o">=</span> <span class="n">getchar</span><span class="p">())</span> <span class="k">if</span><span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="sc">&#39;-&#39;</span><span class="p">)</span> <span class="n">f</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">ch</span> <span class="o">&gt;=</span> <span class="sc">&#39;0&#39;</span> <span class="o">&amp;&amp;</span> <span class="n">ch</span> <span class="o">&lt;=</span> <span class="sc">&#39;9&#39;</span><span class="p">;</span> <span class="n">ch</span> <span class="o">=</span> <span class="n">getchar</span><span class="p">())</span> <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="p">(</span><span class="n">ch</span> <span class="o">^</span> <span class="sc">&#39;0&#39;</span><span class="p">);</span>
+        <span class="n">x</span> <span class="o">*=</span> <span class="n">f</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kr">inline</span> <span class="kt">void</span> <span class="n">putAll</span><span class="p">(){</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">now</span><span class="p">)</span> <span class="n">fwrite</span><span class="p">(</span><span class="n">outBuf</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">now</span><span class="p">,</span> <span class="n">stdout</span><span class="p">),</span> <span class="n">now</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kr">inline</span> <span class="kt">void</span> <span class="n">putchar</span><span class="p">(</span><span class="kt">char</span> <span class="n">ch</span><span class="p">){</span>
+        <span class="n">outBuf</span><span class="p">[</span><span class="n">now</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">ch</span><span class="p">;</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">now</span> <span class="o">==</span> <span class="n">OUT_SIZE</span><span class="p">)</span> <span class="n">putAll</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">Int</span><span class="o">&gt;</span> <span class="kr">inline</span> <span class="kt">void</span> <span class="n">putint</span><span class="p">(</span><span class="n">Int</span> <span class="n">x</span><span class="p">){</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="n">putchar</span><span class="p">(</span><span class="sc">&#39;-&#39;</span><span class="p">),</span> <span class="n">putint</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">);</span>
+        <span class="k">else</span><span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="mi">9</span><span class="p">)</span> <span class="n">putint</span><span class="p">(</span><span class="n">x</span> <span class="o">/</span> <span class="mi">10</span><span class="p">);</span>
+            <span class="n">putchar</span><span class="p">(</span><span class="n">x</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">+</span> <span class="sc">&#39;0&#39;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kr">inline</span> <span class="kt">void</span> <span class="n">end</span><span class="p">(){</span>
+        <span class="n">putAll</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">const</span> <span class="kt">int</span> <span class="n">MAXN</span> <span class="o">=</span> <span class="mi">100000</span><span class="p">;</span>
+
+<span class="k">struct</span> <span class="n">SegmentTree</span><span class="p">{</span>
+    <span class="n">SegmentTree</span> <span class="o">*</span><span class="n">lc</span><span class="p">,</span> <span class="o">*</span><span class="n">rc</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">cnt</span><span class="p">;</span>
+    
+    <span class="n">SegmentTree</span><span class="p">(</span><span class="kt">int</span> <span class="n">l</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">:</span> <span class="n">lc</span><span class="p">(</span><span class="nb">NULL</span><span class="p">),</span> <span class="n">rc</span><span class="p">(</span><span class="nb">NULL</span><span class="p">),</span> <span class="n">l</span><span class="p">(</span><span class="n">l</span><span class="p">),</span> <span class="n">r</span><span class="p">(</span><span class="n">r</span><span class="p">),</span> <span class="n">cnt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">{}</span>
+
+    <span class="kt">void</span> <span class="n">pushDown</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">update</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">copyTo</span><span class="p">(</span><span class="n">SegmentTree</span> <span class="o">*&amp;</span> <span class="n">v</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+    <span class="n">SegmentTree</span> <span class="o">*</span><span class="nf">insert</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">AMOUNT</span><span class="o">&gt;</span> <span class="k">struct</span> <span class="n">MemoryPool</span><span class="p">{</span>
+    <span class="kt">char</span> <span class="n">preAlloc</span><span class="p">[</span><span class="n">AMOUNT</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">T</span><span class="p">)];</span>
+    <span class="n">T</span> <span class="o">*</span><span class="n">cur</span><span class="p">;</span>
+    <span class="n">T</span> <span class="o">*</span><span class="n">recycle</span><span class="p">[</span><span class="n">AMOUNT</span><span class="p">],</span> <span class="o">**</span><span class="n">recur</span><span class="p">;</span>
+
+    <span class="n">MemoryPool</span><span class="p">(){</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="p">(</span><span class="n">T</span><span class="o">*</span><span class="p">)</span><span class="n">preAlloc</span><span class="p">;</span>
+        <span class="n">recur</span> <span class="o">=</span> <span class="n">recycle</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">T</span><span class="o">*</span> <span class="k">operator</span><span class="p">()(){</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">recur</span> <span class="o">!=</span> <span class="n">recycle</span><span class="p">)</span> <span class="k">return</span> <span class="o">*</span><span class="n">recur</span><span class="o">--</span><span class="p">;</span>
+        <span class="k">else</span> <span class="nf">if</span><span class="p">(</span><span class="n">cur</span> <span class="o">!=</span> <span class="p">(</span><span class="n">T</span><span class="o">*</span><span class="p">)</span><span class="n">preAlloc</span> <span class="o">+</span> <span class="n">AMOUNT</span><span class="p">)</span> <span class="k">return</span> <span class="n">cur</span><span class="o">++</span><span class="p">;</span>
+        <span class="k">else</span> <span class="nf">return</span> <span class="p">(</span><span class="n">T</span><span class="o">*</span><span class="p">)</span> <span class="p">(</span><span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="k">sizeof</span><span class="p">(</span><span class="n">T</span><span class="p">)]);</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">free</span><span class="p">(</span><span class="n">T</span> <span class="o">*</span><span class="n">v</span><span class="p">){</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">recur</span> <span class="o">!=</span> <span class="n">recycle</span> <span class="o">+</span> <span class="n">AMOUNT</span><span class="p">)</span> <span class="o">*</span><span class="n">recur</span><span class="o">++</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="n">MemoryPool</span><span class="o">&lt;</span><span class="n">SegmentTree</span><span class="p">,</span> <span class="n">MAXN</span> <span class="o">*</span> <span class="mi">20</span><span class="o">&gt;</span> <span class="n">alloc</span><span class="p">;</span>
+
+<span class="kr">inline</span> <span class="kt">void</span> <span class="n">SegmentTree</span><span class="o">::</span><span class="n">pushDown</span><span class="p">(){</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">lc</span><span class="p">){</span>
+        <span class="n">lc</span> <span class="o">=</span> <span class="k">new</span> <span class="p">(</span><span class="n">alloc</span><span class="p">())</span> <span class="n">SegmentTree</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">l</span> <span class="o">+</span> <span class="n">r</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="n">rc</span> <span class="o">=</span> <span class="k">new</span> <span class="p">(</span><span class="n">alloc</span><span class="p">())</span> <span class="n">SegmentTree</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="n">r</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="n">r</span><span class="p">);</span>
+    <span class="p">}</span>    
+<span class="p">}</span>
+
+<span class="kr">inline</span> <span class="kt">void</span> <span class="n">SegmentTree</span><span class="o">::</span><span class="n">update</span><span class="p">(){</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="n">lc</span><span class="o">-&gt;</span><span class="n">cnt</span> <span class="o">+</span> <span class="n">rc</span><span class="o">-&gt;</span><span class="n">cnt</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kr">inline</span> <span class="kt">void</span> <span class="n">SegmentTree</span><span class="o">::</span><span class="n">copyTo</span><span class="p">(</span><span class="n">SegmentTree</span> <span class="o">*&amp;</span><span class="n">v</span><span class="p">)</span> <span class="k">const</span><span class="p">{</span>
+    <span class="o">*</span><span class="n">v</span> <span class="o">=</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kr">inline</span> <span class="n">SegmentTree</span> <span class="o">*</span><span class="n">SegmentTree</span><span class="o">::</span><span class="n">insert</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="k">const</span><span class="p">{</span>
+    <span class="n">SegmentTree</span> <span class="o">*</span><span class="n">v</span> <span class="o">=</span> <span class="k">new</span> <span class="p">(</span><span class="n">alloc</span><span class="p">())</span> <span class="n">SegmentTree</span><span class="p">();</span>
+    <span class="k">this</span><span class="o">-&gt;</span><span class="n">copyTo</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="n">l</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">){</span>
+        <span class="n">v</span><span class="o">-&gt;</span><span class="n">pushDown</span><span class="p">();</span>
+        
+        <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="n">l</span> <span class="o">+</span> <span class="n">r</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">mid</span><span class="p">)</span> <span class="n">v</span><span class="o">-&gt;</span><span class="n">lc</span> <span class="o">=</span> <span class="n">v</span><span class="o">-&gt;</span><span class="n">lc</span><span class="o">-&gt;</span><span class="n">insert</span><span class="p">(</span><span class="n">x</span><span class="p">);</span> <span class="k">else</span> <span class="n">v</span><span class="o">-&gt;</span><span class="n">rc</span> <span class="o">=</span> <span class="n">v</span><span class="o">-&gt;</span><span class="n">rc</span><span class="o">-&gt;</span><span class="n">insert</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+
+        <span class="n">v</span><span class="o">-&gt;</span><span class="n">update</span><span class="p">();</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="n">v</span><span class="o">-&gt;</span><span class="n">cnt</span><span class="o">++</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">v</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">struct</span> <span class="n">PresentTree</span><span class="p">{</span>
+    <span class="n">SegmentTree</span> <span class="o">*</span><span class="n">T</span><span class="p">[</span><span class="n">MAXN</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span> <span class="c1">// T[i] : a[0, i)</span>
+    
+    <span class="kt">void</span> <span class="nf">build</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+        <span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SegmentTree</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">T</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">insert</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]);</span>
+    <span class="p">}</span>
+    
+    <span class="kt">int</span> <span class="nf">select</span><span class="p">(</span><span class="n">SegmentTree</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="n">SegmentTree</span> <span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">){</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">r</span> <span class="o">-</span> <span class="n">a</span><span class="o">-&gt;</span><span class="n">l</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="k">return</span> <span class="n">a</span><span class="o">-&gt;</span><span class="n">l</span><span class="p">;</span>
+        
+        <span class="n">a</span><span class="o">-&gt;</span><span class="n">pushDown</span><span class="p">(),</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">pushDown</span><span class="p">();</span>
+        
+        <span class="kt">int</span> <span class="n">cnt</span> <span class="o">=</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">lc</span><span class="o">-&gt;</span><span class="n">cnt</span> <span class="o">-</span> <span class="n">a</span><span class="o">-&gt;</span><span class="n">lc</span><span class="o">-&gt;</span><span class="n">cnt</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="n">a</span><span class="o">-&gt;</span><span class="n">l</span> <span class="o">+</span> <span class="n">a</span><span class="o">-&gt;</span><span class="n">r</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">;</span>
+        
+        <span class="k">if</span><span class="p">(</span><span class="n">k</span> <span class="o">&lt;</span> <span class="n">cnt</span><span class="p">)</span> <span class="k">return</span> <span class="n">select</span><span class="p">(</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">lc</span><span class="p">,</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">lc</span><span class="p">,</span> <span class="n">k</span><span class="p">);</span>
+        <span class="k">else</span> <span class="k">return</span> <span class="n">select</span><span class="p">(</span><span class="n">a</span><span class="o">-&gt;</span><span class="n">rc</span><span class="p">,</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">rc</span><span class="p">,</span> <span class="n">k</span> <span class="o">-</span> <span class="n">cnt</span><span class="p">);</span>
+    <span class="p">}</span>
+    
+    <span class="kt">int</span> <span class="nf">select</span><span class="p">(</span><span class="kt">int</span> <span class="n">l</span><span class="p">,</span> <span class="kt">int</span> <span class="n">r</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">){</span>
+        <span class="k">return</span> <span class="n">select</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">T</span><span class="p">[</span><span class="n">r</span><span class="p">],</span> <span class="n">k</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span> <span class="n">solver</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="n">a</span><span class="p">[</span><span class="n">MAXN</span><span class="p">],</span> <span class="n">n</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">origin</span><span class="p">[</span><span class="n">MAXN</span><span class="p">],</span> <span class="n">size</span><span class="p">;</span>
+
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">disc</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="p">){</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">copy</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">a</span> <span class="o">+</span> <span class="n">n</span><span class="p">,</span> <span class="n">origin</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">sort</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">origin</span> <span class="o">+</span> <span class="n">n</span><span class="p">);</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">unique</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">origin</span> <span class="o">+</span> <span class="n">n</span><span class="p">)</span> <span class="o">-</span> <span class="n">origin</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">lower_bound</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">origin</span> <span class="o">+</span> <span class="n">size</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">-</span> <span class="n">origin</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+    <span class="n">IO</span><span class="o">::</span><span class="n">init</span><span class="p">();</span>
+    
+    <span class="kt">int</span> <span class="n">m</span><span class="p">;</span>
+    <span class="n">IO</span><span class="o">::</span><span class="n">readint</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">IO</span><span class="o">::</span><span class="n">readint</span><span class="p">(</span><span class="n">m</span><span class="p">);</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">IO</span><span class="o">::</span><span class="n">readint</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+    
+    <span class="n">disc</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+    <span class="n">solver</span><span class="p">.</span><span class="n">build</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+    
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">m</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="kt">int</span> <span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">k</span><span class="p">;</span>
+        <span class="n">IO</span><span class="o">::</span><span class="n">readint</span><span class="p">(</span><span class="n">l</span><span class="p">),</span> <span class="n">IO</span><span class="o">::</span><span class="n">readint</span><span class="p">(</span><span class="n">r</span><span class="p">),</span> <span class="n">IO</span><span class="o">::</span><span class="n">readint</span><span class="p">(</span><span class="n">k</span><span class="p">);</span>
+        <span class="n">l</span><span class="o">--</span><span class="p">,</span> <span class="n">r</span><span class="o">--</span><span class="p">,</span> <span class="n">k</span><span class="o">--</span><span class="p">;</span>
+        <span class="n">IO</span><span class="o">::</span><span class="n">putint</span><span class="p">(</span><span class="n">origin</span><span class="p">[</span> <span class="n">solver</span><span class="p">.</span><span class="n">select</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">r</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="p">]),</span> <span class="n">IO</span><span class="o">::</span><span class="n">putchar</span><span class="p">(</span><span class="sc">&#39;\n&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">IO</span><span class="o">::</span><span class="n">end</span><span class="p">();</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</code></pre>
+
+    </div>
+    
+    <footer class = "ArticleFooter">
+        <div class = "Tags">
+            <i class = "fa fa-tags"></i>
+            Tags: 
+            
+            <span class = "EachTag">
+                <a href = "/tag/OI/"> OI </a>
+            </span>
+            
+            <span class = "EachTag">
+                <a href = "/tag/Data-Structure/"> 数据结构 </a>
+            </span>
+            
+            <span class = "EachTag">
+                <a href = "/tag/Tree/"> 树 </a>
+            </span>
+            
+            <span class = "EachTag">
+                <a href = "/tag/Learning-Note/"> 学习笔记 </a>
+            </span>
+            
+            <span class = "EachTag">
+                <a href = "/tag/Persistent/"> 可持久化 </a>
+            </span>
+            
+            <span class = "EachTag">
+                <a href = "/tag/Persistent-SegMentTree/"> 可持久化线段树 </a>
+            </span>
+            
+            <span class = "EachTag">
+                <a href = "/tag/PresentTree/"> 主席树 </a>
+            </span>
+            
+            <span class = "EachTag">
+                <a href = "/tag/Value-SegMentTree/"> 权值线段树 </a>
+            </span>
+            
+        </div>
+    </footer>
+</article>
+
+<div class = "Comment">
+    <div class = "ds-thread" data-thread-key = "PresentTree" data-title = "主席树 - 学习笔记" data-url = "http://hellc.tk/article/PresentTree/"></div>
+</div>
+
+
+    </div>
+    <aside id = "Sidebar">
+    <div id = "Tags">
+        <h3 class = "Title">
+            Tags
+        </h3>
+
+        <div id = "tagcloud"> <ul>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Test/"> Test </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Starting/"> Starting </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/OI/"> OI </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Search/"> 搜索 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Meet-in-the-Middle/"> Meet-in-the-Middle </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Counting/"> 计数 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/State-Zip/"> 状态压缩 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Data-Structure/"> 数据结构 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Tree/"> 树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Balanced-Tree/"> 平衡树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Treap/"> Treap </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Network-Flow/"> 网络流 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Minimal-Cut/"> 最小割 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Plane-Graph/"> 平面图 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Shortest-Path/"> 最短路 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/BZOJ/"> BZOJ </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/DP/"> DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Linear-Dynamic-Programming/"> 线性DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Dilworth/"> Dilworth定理 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/LIS/"> LIS </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/NOIP/"> NOIP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Bitwise-Dynamic-Programming/"> 位运算DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/NOI/"> NOI </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Tree-Dynamic-Programming/"> 树形DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Iterative-Deepening-Search/"> 迭代加深搜索 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/IDAstar/"> IDAstar </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Search-Pruning/"> 剪枝 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Bitwise/"> 位运算 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Manhattan-Distance/"> 曼哈顿距离 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Monotonic-Queue/"> 单调队列 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Learning-Note/"> 学习笔记 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/UnionFindSet/"> 并查集 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Heuristic-Merge/"> 启发式合并 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Blog/"> Blog </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Hexo/"> Hexo </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Coding/"> Coding </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Git/"> Git </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Geek/"> Geek </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Tree-Chain-Partition/"> 树链剖分 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Segment-Tree/"> 线段树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Traning-In-AH/"> 安师大附中集训 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Coordinate-Dynamic-Programming/"> 坐标型DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/IOI/"> IOI </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/TJOI/"> TJOI </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Digit-Dynamic-Programming/"> 数位DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Graph-Theory/"> 图论 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Spaning-Tree/"> 生成树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/0-1-Fractional-Programming/"> 0-1分数规划 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Bisection/"> 二分 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Note/"> 琐记 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Enumeration/"> 枚举 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Memory-Search/"> 记忆化搜索 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/DFS/"> DFS </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Hash/"> 哈希 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Backtracking/"> 回溯 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Set/"> Set </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/PreTreat/"> 预处理 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Slope-Optimization/"> 斜率优化 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Pack-Dynamic-Programming/"> 背包DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Partition-Dynamic-Programming/"> 划分DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/APIO/"> APIO </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/State-Space-Ssearch/"> 状态空间搜索 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/BFS/"> BFS </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Bidirectional-BFS/"> 双向BFS </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Mathematics/"> 数学 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Derangement/"> 错排 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/SDOI/"> SDOI </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Persistent/"> 可持久化 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Persistent-SegMentTree/"> 可持久化线段树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Offline/"> 离线 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/SCOI/"> SCOI </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Interval-Dynamic-Programmning/"> 区间DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Travels/"> 游记 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Summary/"> 总结 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/GarsiaWachs/"> GarsiaWachs算法 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Binary-Index-Tree/"> 树状数组 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Number-Theory/"> 数论 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Encoding/"> 编码 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Cantor-Expansion/"> 康托展开 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/ZJOI/"> ZJOI </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Complete-Binary-Tree/"> 完全二叉树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/CTSC/"> CTSC </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Greedy/"> 贪心 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/PresentTree/"> 主席树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Value-SegMentTree/"> 权值线段树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Tree-In-Tree/"> 树套树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Expected-Value/"> 期望 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Expected-Value-Dynamic-Programming/"> 期望 DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/CodeForces/"> CodeForces </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Guass/"> 高斯消元 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/DFS-Sequence/"> DFS序 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Polynomial/"> 多项式 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Modui-algorithm/"> 莫队 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/LCA/"> 最近公共祖先 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Sqrt-Algorithm/"> 根号算法 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Tree-Block/"> 树分块 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Number-Funtion/"> 数论函数 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/FFT/"> FFT </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/FNT/"> FNT </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Generating-Function/"> 生成函数 </a>
+            </li>
+        
+        </ul> </div>
+    </div>
+    
+    <div id = "FriendLinks">
+        <h3 class = "Title">
+            Friends
+        </h3>
+        
+        
+        <div class = "EachFriendLink">
+            <a href = "https://5261.github.io" target = "_blank"> Hellc </a>
+        </div>
+        
+        <div class = "EachFriendLink">
+            <a href = "http://notebook.myforesight.xyz/" target = "_blank"> SchrodingerZhu </a>
+        </div>
+        
+        <div class = "EachFriendLink">
+            <a href = "http://roller.coding.me/blog" target = "_blank"> roller&#39;s blog </a>
+        </div>
+        
+        <div class = "EachFriendLink">
+            <a href = "http://gavin_nicholas.coding.me" target = "_blank"> Gavin </a>
+        </div>
+        
+        <div class = "EachFriendLink">
+            <a href = "http://iovo7.com/" target = "_blank"> iovo7 </a>
+        </div>
+        
+        <div class = "EachFriendLink">
+            <a href = "http://ilern.cf/" target = "_blank"> ilern </a>
+        </div>
+        
+        <div class = "EachFriendLink">
+            <a href = "http://blog.u-pt.pw/" target = "_blank"> Grapedge </a>
+        </div>
+        
+        <div class = "EachFriendLink">
+            <a href = "http://blog.sulfur6.top" target = "_blank"> Sulfur6 </a>
+        </div>
+        
+        <div class = "EachFriendLink">
+            <a href = "https://yqy.moe" target = "_blank"> yqy&#39;s Blog </a>
+        </div>
+        
+    </div>
+</aside>
+
+</div>
+
+<footer id = "PageFooter">
+    <hr/>
+    <p> Copyright &copy; Hellc 2017. All rights reserved. </p>
+</footer>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','http://o4jiepyc4.qnssl.com/analytics.js','ga');
+
+  ga('create', 'UA-90448321-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+</body>
+
+</html>
+

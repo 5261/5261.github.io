@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+
+
+
+<html>
+
+<head>
+    <meta charset = "UTF-8">
+    
+    <title> Hellc </title>
+    
+    <link rel = "stylesheet" type = "text/css" href = "https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <link rel = "stylesheet" type = "text/css" href = "/static/css/parts/header.css" />
+    <link rel = "stylesheet" type = "text/css" href = "/static/css/parts/sidebar.css" />
+    <link rel = "stylesheet" type = "text/css" href = "/static/css/parts/main.css" />
+    <link rel = "stylesheet" type = "text/css" href = "/static/css/parts/footer.css" />
+
+    
+
+<link rel = "stylesheet" type = "text/css" href = "/static/css/article-detail.css" />
+<link rel = "stylesheet" type = "text/css" href = "/static/css/parts/markdown.css" />
+<link rel = "stylesheet" type = "text/css" href = "/static/css/parts/highlight.css" />
+
+
+    <script type = "text/javascript" src = "//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <script type = "text/javascript" src = "/static/js/tagcloud.js"></script>
+
+    <script type = "text/javascript">
+        var settings = {
+            //height of sphere container
+            height: 300,
+            //width of sphere container
+            width: 300,
+            //radius of sphere
+            radius: 100,
+            //rotation speed
+            speed: 2,
+            //sphere rotations slower
+            slower: 0.9,
+            //delay between update position
+            timer: 5,
+            //dependence of a font size on axis Z
+            fontMultiplier: 20,
+            //tag css stylies on mouse over
+            hoverStyle: {
+                border: 'none',
+                color: '#0b2e6f'
+            },
+            //tag css stylies on mouse out
+            mouseOutStyle: {
+                border: '',
+                color: ''
+            }
+        };
+    
+        $(document).ready(function(){
+            $('#tagcloud').tagoSphere(settings);
+        });
+    </script>
+
+    
+<script type = "text/javascript" src = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type = "text/x-mathjax-config"> MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
+
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"hellc"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+</script>
+
+
+</head>
+
+<body>
+
+
+
+<header id = "PageHeader">
+
+    <div id = "BlogHeader">
+        <div id = "BlogImgLogo">
+            <img src = "/static/img/HellcLogo.jpg" alt = "Hellc"/>
+        </div>
+        
+        <div id = "BlogTextLogo">
+            <div id = "BlogName">
+                <h1> Hellc </h1>
+            </div>
+            
+            <div id = "BlogMotto">
+                <h2> Fly in the blue and free sky. </h2>
+            </div>
+        </div>
+        
+    </div>
+
+    <nav id = "BlogNav">
+        <ul>
+            <li>
+                <a href = "/" class = "NavLink"> Home </a>
+            </li>
+
+            <li> 
+                <a href = "/archive/" class = "NavLink"> Archive </a>
+            </li>
+
+            <li>
+                <a href = "/about/" class = "NavLink"> About </a>
+            </li>
+        </ul>
+    </nav>
+
+</header>
+
+
+<div id = "Content">
+    <div id = Wrapper>
+        
+<article class = "Article">
+    
+    <header class = "ArticleHeader">
+        <div class = "Title">
+            <a href = "#">
+                <h2> [BZOJ 1096] 仓库建设 - 斜率优化 </h2>
+            </a>
+        </div>
+    </header>
+    
+    <div class = "ArticleBody Markdown">
+        <h4>【题目描述】</h4>
+<p>L公司有N个工厂，由高到底分布在一座山上。如图所示，工厂1在山顶，工厂N在山脚。</p>
+<p>由于这座山处于高原内陆地区（干燥少雨），L公司一般把产品直接堆放在露天，以节省费用。</p>
+<p>突然有一天，L公司的总裁L先生接到气象部门的电话，被告知三天之后将有一场暴雨，于是L先生决定紧急在某些工厂建立一些仓库以免产品被淋坏。</p>
+<p>由于地形的不同，在不同工厂建立仓库的费用可能是不同的。</p>
+<p>第i个工厂目前已有成品$ P_i $件，在第$ i $个工厂位置建立仓库的费用是$ C_i $。</p>
+<p>对于没有建立仓库的工厂，其产品应被运往其他的仓库进行储藏，而由于L公司产品的对外销售处设
+置在山脚的工厂N，故产品只能往山下运（即只能运往编号更大的工厂的仓库），</p>
+<p>当然运送产品也是需要费用的，假设一件产品运送1个单位距离的费用是1。假设建立的仓库容量都都是足够大的，可以容下所有的产品。</p>
+<p>你将得到以下数据：
+1：工厂$ i $距离工厂1的距离$ X_i $（其中$ X_1 $=0）;
+2：工厂$ i $目前已有成品数量$ P_i $;
+3：在工厂$ i $建立仓库的费用$ C_i $;</p>
+<p>请你帮助L公司寻找一个仓库建设的方案，使得总的费用（建造费用+运输费用）最小。</p>
+<h4>【题目链接】</h4>
+<p><a href="http://www.lydsy.com/JudgeOnline/problem.php?id=1096">BZOJ 1096</a> 仓库建设 【ZJOI 2007】</p>
+<!--more-->
+<h4>【解题思路】</h4>
+<p>这题很像一道另一道题目嘛，【CEOI 2004】锯木厂选址。</p>
+<p>首先考虑一个暴力DP，设$ f[i] $表示只在前$ i $个工厂，第$ i $个工厂必须建造仓库的最小花费。</p>
+<p>通过考虑上一个仓库的建造位置$ j $，可得，</p>
+<p>$$ f[i] = min{\ f[j] + cost(j, i), \ j \in [0, i)} + c_i$$</p>
+<p>其中$ cost(j, i) $表示将$ [j + 1, i] $这一段存入$ i $的花费。</p>
+<p>如何尽可能快地计算这个花费呢？我们借助前缀和的思想。</p>
+<p>设$ w_i $为$P_i$的前缀和。
+如果假定这些产品都是从起点运到$ i $的，那么总花费就是$ (w_i - w_j)x_i $，但因为这些产品并非是从起点运过来的，所以对于每组产品$ t $可节省$x_tP_t$的费用，那么设$ d_i $为$ x_iP_i $的前缀和，则$  cost(j, i) = (w_i - w_j)x_i - (d_i - d_j)$，所以我们的转移方程就成了：</p>
+<p>$$ f[i] =  min{\ f[j] + (w_i - w_j)x_i - (d_i - d_j), \ j \in [0, i)} + c_i$$</p>
+<p>接下来就要准备斜率优化咯，展开，尽量分离$i, j$，容易得到，</p>
+<p>设决策$ j $的决策费用为$ F(j) $，则，
+$$ F(j) = h(i) + g(j) - w_jx_i $$
+其中，
+$$ h(i) = w_ix_i - d_i + c_i$$
+$$ g(j) = f[j] + d_j $$</p>
+<p>然后考虑对于决策$j_1 &lt; j_2$，$F(j_2) &lt; F(j_1)$的充要条件化为斜率形式为：</p>
+<p>$$ Slope(j_1, j_2) = \frac {g(j_1) - g(j_2)} {w_{j_1} - w_{j_2}} &lt; x_i$$</p>
+<p>因为$ x_i $递增，所以维护 $ Slope(j_k, j_{k + 1}) &gt; x_i $，最优决策取队首。</p>
+<p>同时维护斜率单调增。</p>
+<h4>【AC代码】</h4>
+<p>注意边界。</p>
+<pre><code class="language-c++"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;cstdio&gt;</span><span class="cp"></span>
+ 
+<span class="k">const</span> <span class="kt">int</span> <span class="n">MAXN</span> <span class="o">=</span> <span class="mi">1000061</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">int64</span><span class="p">;</span>
+ 
+<span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">x</span><span class="p">[</span><span class="n">MAXN</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="n">MAXN</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="p">[</span><span class="n">MAXN</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+ 
+<span class="n">int64</span> <span class="n">w</span><span class="p">[</span><span class="n">MAXN</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="n">MAXN</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+ 
+<span class="n">int64</span> <span class="n">f</span><span class="p">[</span><span class="n">MAXN</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+ 
+<span class="kr">inline</span> <span class="n">int64</span> <span class="nf">g</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">){</span>
+    <span class="k">return</span> <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="p">}</span>
+ 
+<span class="kr">inline</span> <span class="n">int64</span> <span class="nf">h</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">){</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">w</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="p">}</span>
+ 
+<span class="kr">inline</span> <span class="kt">double</span> <span class="nf">slope</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="kt">int</span> <span class="n">j</span><span class="p">){</span>
+    <span class="k">return</span> <span class="p">(</span><span class="kt">double</span><span class="p">)(</span><span class="n">g</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">-</span> <span class="n">g</span><span class="p">(</span><span class="n">j</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">w</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span>
+<span class="p">}</span>
+ 
+<span class="kr">inline</span> <span class="kt">void</span> <span class="nf">dp</span><span class="p">(){</span>
+    <span class="k">static</span> <span class="kt">int</span> <span class="n">Q</span><span class="p">[</span><span class="n">MAXN</span><span class="p">];</span>
+    <span class="kt">int</span> <span class="n">l</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+ 
+    <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">Q</span><span class="p">[</span><span class="o">++</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+ 
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span> <span class="o">&amp;&amp;</span> <span class="n">slope</span><span class="p">(</span><span class="n">Q</span><span class="p">[</span><span class="n">l</span><span class="p">],</span> <span class="n">Q</span><span class="p">[</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="n">l</span><span class="o">++</span><span class="p">;</span>
+ 
+        <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">Q</span><span class="p">[</span><span class="n">l</span><span class="p">];</span>
+        <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">h</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="n">g</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">w</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+ 
+        <span class="k">while</span><span class="p">(</span><span class="n">l</span> <span class="o">&lt;</span> <span class="n">r</span> <span class="o">&amp;&amp;</span> <span class="n">slope</span><span class="p">(</span><span class="n">Q</span><span class="p">[</span><span class="n">r</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">Q</span><span class="p">[</span><span class="n">r</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">slope</span><span class="p">(</span><span class="n">Q</span><span class="p">[</span><span class="n">r</span><span class="p">],</span> <span class="n">i</span><span class="p">))</span> <span class="n">r</span><span class="o">--</span><span class="p">;</span>
+        <span class="n">Q</span><span class="p">[</span><span class="o">++</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+ 
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+    <span class="c1">// freopen(&quot;storage.in&quot;, &quot;r&quot;, stdin), freopen(&quot;storage.out&quot;, &quot;w&quot;, stdout);</span>
+ 
+    <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">n</span><span class="p">);</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%d%d%d&quot;</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="n">i</span><span class="p">,</span> <span class="n">a</span> <span class="o">+</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="o">+</span> <span class="n">i</span><span class="p">);</span>
+ 
+    <span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="n">w</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">w</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">int64</span><span class="p">)</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="p">}</span>
+ 
+    <span class="n">dp</span><span class="p">();</span>
+ 
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%lld</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">f</span><span class="p">[</span><span class="n">n</span><span class="p">]);</span>
+ 
+    <span class="c1">// fclose(stdin), fclose(stdout);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</code></pre>
+<p>就是这样啦</p>
+
+    </div>
+    
+    <footer class = "ArticleFooter">
+        <div class = "Tags">
+            <i class = "fa fa-tags"></i>
+            Tags: 
+            
+            <span class = "EachTag">
+                <a href = "/tag/OI/"> OI </a>
+            </span>
+            
+            <span class = "EachTag">
+                <a href = "/tag/BZOJ/"> BZOJ </a>
+            </span>
+            
+            <span class = "EachTag">
+                <a href = "/tag/DP/"> DP </a>
+            </span>
+            
+            <span class = "EachTag">
+                <a href = "/tag/Slope-Optimization/"> 斜率优化 </a>
+            </span>
+            
+            <span class = "EachTag">
+                <a href = "/tag/ZJOI/"> ZJOI </a>
+            </span>
+            
+        </div>
+    </footer>
+</article>
+
+<div class = "Comment">
+    <div class = "ds-thread" data-thread-key = "Storage-ZJOI2007" data-title = "[BZOJ 1096] 仓库建设 - 斜率优化" data-url = "http://hellc.tk/article/Storage-ZJOI2007/"></div>
+</div>
+
+
+    </div>
+    <aside id = "Sidebar">
+    <div id = "Tags">
+        <h3 class = "Title">
+            Tags
+        </h3>
+
+        <div id = "tagcloud"> <ul>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Test/"> Test </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Starting/"> Starting </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/OI/"> OI </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Search/"> 搜索 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Meet-in-the-Middle/"> Meet-in-the-Middle </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Counting/"> 计数 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/State-Zip/"> 状态压缩 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Data-Structure/"> 数据结构 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Tree/"> 树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Balanced-Tree/"> 平衡树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Treap/"> Treap </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Network-Flow/"> 网络流 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Minimal-Cut/"> 最小割 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Plane-Graph/"> 平面图 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Shortest-Path/"> 最短路 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/BZOJ/"> BZOJ </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/DP/"> DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Linear-Dynamic-Programming/"> 线性DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Dilworth/"> Dilworth定理 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/LIS/"> LIS </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/NOIP/"> NOIP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Bitwise-Dynamic-Programming/"> 位运算DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/NOI/"> NOI </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Tree-Dynamic-Programming/"> 树形DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Iterative-Deepening-Search/"> 迭代加深搜索 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/IDAstar/"> IDAstar </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Search-Pruning/"> 剪枝 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Bitwise/"> 位运算 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Manhattan-Distance/"> 曼哈顿距离 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Monotonic-Queue/"> 单调队列 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Learning-Note/"> 学习笔记 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/UnionFindSet/"> 并查集 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Heuristic-Merge/"> 启发式合并 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Blog/"> Blog </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Hexo/"> Hexo </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Coding/"> Coding </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Git/"> Git </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Geek/"> Geek </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Tree-Chain-Partition/"> 树链剖分 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Segment-Tree/"> 线段树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Traning-In-AH/"> 安师大附中集训 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Coordinate-Dynamic-Programming/"> 坐标型DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/IOI/"> IOI </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/TJOI/"> TJOI </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Digit-Dynamic-Programming/"> 数位DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Graph-Theory/"> 图论 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Spaning-Tree/"> 生成树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/0-1-Fractional-Programming/"> 0-1分数规划 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Bisection/"> 二分 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Note/"> 琐记 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Enumeration/"> 枚举 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Memory-Search/"> 记忆化搜索 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/DFS/"> DFS </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Hash/"> 哈希 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Backtracking/"> 回溯 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Set/"> Set </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/PreTreat/"> 预处理 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Slope-Optimization/"> 斜率优化 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Pack-Dynamic-Programming/"> 背包DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Partition-Dynamic-Programming/"> 划分DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/APIO/"> APIO </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/State-Space-Ssearch/"> 状态空间搜索 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/BFS/"> BFS </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Bidirectional-BFS/"> 双向BFS </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Mathematics/"> 数学 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Derangement/"> 错排 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/SDOI/"> SDOI </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Persistent/"> 可持久化 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Persistent-SegMentTree/"> 可持久化线段树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Offline/"> 离线 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/SCOI/"> SCOI </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Interval-Dynamic-Programmning/"> 区间DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Travels/"> 游记 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Summary/"> 总结 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/GarsiaWachs/"> GarsiaWachs算法 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Binary-Index-Tree/"> 树状数组 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Number-Theory/"> 数论 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Encoding/"> 编码 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Cantor-Expansion/"> 康托展开 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/ZJOI/"> ZJOI </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Complete-Binary-Tree/"> 完全二叉树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/CTSC/"> CTSC </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Greedy/"> 贪心 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/PresentTree/"> 主席树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Value-SegMentTree/"> 权值线段树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Tree-In-Tree/"> 树套树 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Expected-Value/"> 期望 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Expected-Value-Dynamic-Programming/"> 期望 DP </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/CodeForces/"> CodeForces </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Guass/"> 高斯消元 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/DFS-Sequence/"> DFS序 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Polynomial/"> 多项式 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Modui-algorithm/"> 莫队 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/LCA/"> 最近公共祖先 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Sqrt-Algorithm/"> 根号算法 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Tree-Block/"> 树分块 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Number-Funtion/"> 数论函数 </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/FFT/"> FFT </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/FNT/"> FNT </a>
+            </li>
+        
+            <li class = "EachTag">
+                <a href = "/tag/Generating-Function/"> 生成函数 </a>
+            </li>
+        
+        </ul> </div>
+    </div>
+    
+    <div id = "FriendLinks">
+        <h3 class = "Title">
+            Friends
+        </h3>
+        
+        
+        <div class = "EachFriendLink">
+            <a href = "https://5261.github.io" target = "_blank"> Hellc </a>
+        </div>
+        
+        <div class = "EachFriendLink">
+            <a href = "http://notebook.myforesight.xyz/" target = "_blank"> SchrodingerZhu </a>
+        </div>
+        
+        <div class = "EachFriendLink">
+            <a href = "http://roller.coding.me/blog" target = "_blank"> roller&#39;s blog </a>
+        </div>
+        
+        <div class = "EachFriendLink">
+            <a href = "http://gavin_nicholas.coding.me" target = "_blank"> Gavin </a>
+        </div>
+        
+        <div class = "EachFriendLink">
+            <a href = "http://iovo7.com/" target = "_blank"> iovo7 </a>
+        </div>
+        
+        <div class = "EachFriendLink">
+            <a href = "http://ilern.cf/" target = "_blank"> ilern </a>
+        </div>
+        
+        <div class = "EachFriendLink">
+            <a href = "http://blog.u-pt.pw/" target = "_blank"> Grapedge </a>
+        </div>
+        
+        <div class = "EachFriendLink">
+            <a href = "http://blog.sulfur6.top" target = "_blank"> Sulfur6 </a>
+        </div>
+        
+        <div class = "EachFriendLink">
+            <a href = "https://yqy.moe" target = "_blank"> yqy&#39;s Blog </a>
+        </div>
+        
+    </div>
+</aside>
+
+</div>
+
+<footer id = "PageFooter">
+    <hr/>
+    <p> Copyright &copy; Hellc 2017. All rights reserved. </p>
+</footer>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','http://o4jiepyc4.qnssl.com/analytics.js','ga');
+
+  ga('create', 'UA-90448321-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+</body>
+
+</html>
+
